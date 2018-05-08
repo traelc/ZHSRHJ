@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ZHSRHJ</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">登录</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="txt_name">登录名</string>
+    <string name="txt_password">密码</string>
+</resources>
