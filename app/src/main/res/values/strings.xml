@@ -5,4 +5,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="txt_name">登录名</string>
     <string name="txt_password">密码</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
