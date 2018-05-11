@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -20,17 +21,15 @@ class LoginActivity : AppCompatActivity() {
                     try {
                         val POST_FORM = "http://203.156.245.74:10003/api/User"
                         val client = OkHttpClient()
-                        val requestBody = FormBody.Builder().add("userName", txtName.text.toString()).add("password",txtPassword.text.toString()).build()
+                        val requestBody = FormBody.Builder().add("userName", txtName.text.toString()).add("password", txtPassword.text.toString()).build()
                         val request = Request.Builder()
                                 .url(POST_FORM)
                                 .post(requestBody)
                                 .build()
-
-                        val call = client.newCall(request)
-                        val response = call.execute()
+                        val response = client.newCall(request).execute()
                         if (response.isSuccessful) {
-                            var aa = response.body()
-                            if (aa != null) {
+                            if (response.body() != null) {
+                                var user: User = Gson().fromJson(response.body().toString(), User::class.java)
                                 //startActivity<MainActivity>()
                             } else {
 
@@ -39,8 +38,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     } catch (e: Exception) {
                         println(e.message)
-                    }
-                    finally {
+                    } finally {
                         pbLogin.visibility = View.INVISIBLE
                     }
                 }
