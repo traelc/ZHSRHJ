@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
                         val response = client.newCall(request).execute()
                         if (response.isSuccessful) {
                             if (response.body() != null) {
-                                var user: User = Gson().fromJson(response.body().toString(), User::class.java)
+                                //Util.inst.User= Gson().fromJson(response.body().toString(), User::class.java)
                                 //startActivity<MainActivity>()
                             } else {
 
