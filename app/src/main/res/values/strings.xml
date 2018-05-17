@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">ZHSRHJ</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">登录</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="login_title_login">登录</string>
+    <string name="login_title_update">更新参数</string>
     <string name="txt_name">登录名</string>
     <string name="txt_password">密码</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_collection_list">CollectionListActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

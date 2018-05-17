@@ -23,7 +23,10 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"></activity>
+            android:label="@string/title_activity_main" />
+        <activity
+            android:name=".CollectionListActivity"
+            android:label="@string/title_activity_collection_list"></activity>
     </application>
 
 </manifest>

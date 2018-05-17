@@ -6,34 +6,30 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.indeterminateProgressDialog
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        pbLogin.visibility = View.VISIBLE
-        var aa = indeterminateProgressDialog("This a progress dialog")
-        aa.show()
-        aa.dismiss()
-        if (txtName.text.isNullOrEmpty() || txtName.text.isNullOrEmpty()) {
-            toast("请输入用户名和密码！")
-        }
         when (item.itemId) {
-            R.id.navigation_dashboard -> {
+            R.id.navigation_login -> {
+                if (txtName.text.isNullOrEmpty() || txtName.text.isNullOrEmpty()) {
+                    alert("用户名或密码不能为空！") {}.show()
+                }
+                var progress = indeterminateProgressDialog("登录中")
+                progress.show()
                 doAsync {
                     try {
                         val client = OkHttpClient()
                         val requestBody = FormBody.Builder().add("userName", txtName.text.toString()).add("password", txtPassword.text.toString()).build()
                         val request = Request.Builder()
-                                .url(Util.inst.uri + "User")
+                                .url(Util.inst.interfaceUrl + "User")
                                 .post(requestBody)
                                 .build()
                         val response = client.newCall(request).execute()
@@ -43,20 +39,30 @@ class LoginActivity : AppCompatActivity() {
                                 Util.inst.user = Gson().fromJson(body.string(), User::class.java)
                                 startActivity<MainActivity>()
                             } else {
-                                toast("用户名和密码错误！")
+                                alert("用户名和密码错误！") {}.show()
                             }
                             response.close()
                         }
                     } catch (e: Exception) {
-                        print(e.message)
-                        toast("用户名和密码错误！")
+                        alert("用户名和密码错误！") {}.show()
                     } finally {
-                        pbLogin.visibility = View.INVISIBLE
+                        progress.hide()
                     }
                 }
             }
+            R.id.navigation_update -> {
+                getSpecial()
+                alert("更新配置成功！") {}.show()
+            }
         }
         false
+    }
+
+    fun getSpecial() {
+        doAsync {
+            special = URL(Util.inst.interfaceUrl + "User").readText()
+            Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+        }
     }
 
     private var special: String by Preference(this, "special", "")
@@ -64,14 +70,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        doAsync {
-            if (special.isNullOrEmpty()) {
-                val text = URL(Util.inst.uri + "User").readText()
-                val obj = Gson().fromJson(text, Special1Template::class.java)
-                //获得该地点的详细地址之后，回到主线程把地址显示在界面上
-            }
-        }
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        if (special.isNullOrEmpty()) {
+            getSpecial()
+        } else {
+            Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+        }
     }
 }
 
