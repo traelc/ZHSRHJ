@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_collection_list.*
 import android.view.ViewGroup
-import android.widget.BaseAdapter
+
 import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -84,24 +84,15 @@ class CollectionListActivity : AppCompatActivity() {
         val listView4 = view4.findViewById(R.id.listview) as ListView
         //———————————————————————————————————重点理解——————————————————————————————————
 
-        //http://203.156.245.74:10003/api/Collection?UserID={UserID}
-
         doAsync {
             var data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Collection?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
-
-            val adapter = BaseAdapter(this, android.R.layout.simple_list_item_1, data)
-
+            val adapter = CollectionListAdapter(baseContext, data)
             //为ListView设置适配器
             listView1.adapter = adapter
             listView2.adapter = adapter
             listView3.adapter = adapter
             listView4.adapter = adapter
         }
-
-        //这里我们传入数据
-
-
-        //android.R.layout.simple_list_item_1是android自带的一个布局，只有一个textview
 
     }
 }
