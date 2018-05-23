@@ -90,9 +90,11 @@
 
     <Spinner
         android:id="@+id/spinner3"
-        android:layout_width="190dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:layout_marginTop="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -125,17 +127,19 @@
 
     <Spinner
         android:id="@+id/spinner4"
-        android:layout_width="190dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/spinner3"
         app:layout_constraintStart_toStartOf="@+id/spinner3"
         app:layout_constraintTop_toBottomOf="@+id/spinner3" />
 
     <Spinner
         android:id="@+id/spinner5"
-        android:layout_width="190dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/spinner4"
         app:layout_constraintStart_toStartOf="@+id/spinner4"
         app:layout_constraintTop_toBottomOf="@+id/spinner4" />
 
@@ -157,12 +161,13 @@
 
     <EditText
         android:id="@+id/editText3"
-        android:layout_width="265dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="地点描述"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/spinner5"
         app:layout_constraintStart_toStartOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -181,18 +186,20 @@
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
         android:text="ToggleButton"
         android:textOff="未完成"
         android:textOn="完成"
-        app:layout_constraintStart_toEndOf="@+id/editText4"
+        app:layout_constraintEnd_toEndOf="@+id/editText3"
         app:layout_constraintTop_toTopOf="@+id/editText4" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText4"
