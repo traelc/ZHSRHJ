@@ -3,9 +3,9 @@
     <item
         android:id="@+id/navigation_update"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/login_title_update" />
+        android:title="@string/login_button_update" />
     <item
         android:id="@+id/navigation_login"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/login_title_login" />
+        android:title="@string/login_button_login" />
 </menu>

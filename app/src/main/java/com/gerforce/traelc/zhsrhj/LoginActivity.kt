@@ -55,10 +55,10 @@ class LoginActivity : AppCompatActivity() {
                 alert("更新配置成功！") {}.show()
             }
         }
-        false
+        true
     }
 
-    fun getSpecial() {
+    private fun getSpecial() {
         doAsync {
             special = URL(Util.inst.interfaceUrl + "User").readText()
             Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
