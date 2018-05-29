@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="中环市容环境实效检查考评系统">
+            android:label="@string/login_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

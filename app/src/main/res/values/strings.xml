@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ZHSRHJ</string>
-    <string name="login_title">登录</string>
+    <string name="login_title">中环市容环境实效检查考评系统</string>
     <string name="login_button_login">登录</string>
     <string name="login_button_update">更新参数</string>
     <string name="login_text_name">登录名</string>
@@ -8,19 +8,18 @@
 
     <string name="main_button_collection">定点采集</string>
     <string name="main_title">功能选择</string>
-    <string name="collection_list_title">居住区采集</string>
-    <string name="collection_title">信息采集</string>
 
+
+    <string name="collection_list_title">采集列表</string>
     <string name="collection_list_button_refresh">刷新</string>
     <string name="collection_list_button_detail">详细</string>
     <string name="collection_list_button_back">返回</string>
 
+    <string name="collection_title">信息采集</string>
     <string name="collection_button_send">发送</string>
     <string name="collection_button_upload">上传照片</string>
     <string name="collection_button_back">返回</string>
 
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
     <string name="title_activity_collection">CollectionActivity</string>
 </resources>

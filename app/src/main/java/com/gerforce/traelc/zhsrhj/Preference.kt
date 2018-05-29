@@ -8,10 +8,10 @@ import kotlin.reflect.KProperty
 /**
  * Created by ouyangshen on 2017/9/24.
  */
-class Preference<T>(val context: Context, val name: String, val default: T) : ReadWriteProperty<Any?, T> {
+class Preference<T>(private val context: Context, val name: String, private val default: T) : ReadWriteProperty<Any?, T> {
 
     //通过属性代理初始化共享参数对象
-    val prefs: SharedPreferences by lazy { context.getSharedPreferences("default", Context.MODE_PRIVATE) }
+    private val prefs: SharedPreferences by lazy { context.getSharedPreferences("default", Context.MODE_PRIVATE) }
 
     //接管属性值的获取行为
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
