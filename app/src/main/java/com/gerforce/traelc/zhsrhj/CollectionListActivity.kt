@@ -85,13 +85,17 @@ class CollectionListActivity : AppCompatActivity() {
         //———————————————————————————————————重点理解——————————————————————————————————
 
         doAsync {
-            var data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Collection?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
-            val adapter = CollectionListAdapter(baseContext, data)
+            val data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Collection?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
+
+            val adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
+            val adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
+            val adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })
+            val adapter4 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 })
             //为ListView设置适配器
-            listView1.adapter = adapter
-            listView2.adapter = adapter
-            listView3.adapter = adapter
-            listView4.adapter = adapter
+            listView1.adapter = adapter1
+            listView2.adapter = adapter2
+            listView3.adapter = adapter3
+            listView4.adapter = adapter4
         }
 
     }
