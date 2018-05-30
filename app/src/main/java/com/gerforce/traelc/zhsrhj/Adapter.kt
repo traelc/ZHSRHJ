@@ -15,7 +15,7 @@ class CollectionListAdapter(private val context: Context, private val Collection
 
     override fun getItem(position: Int): Any = CollectionList[position]
 
-    override fun getItemId(position: Int): Long = position.toLong()
+    override fun getItemId(position: Int): Long = CollectionList[position].AssignmentID.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
@@ -23,7 +23,6 @@ class CollectionListAdapter(private val context: Context, private val Collection
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.list_view, null)
             holder = ViewHolder()
-
 
             holder.tbAddress = view.findViewById(R.id.tbAddress)
             holder.tbDistrict = view.findViewById(R.id.tbDistrict)
@@ -54,6 +53,4 @@ class CollectionListAdapter(private val context: Context, private val Collection
         lateinit var tbStartTime: TextView
         lateinit var tbStreet: TextView
     }
-
-
 }

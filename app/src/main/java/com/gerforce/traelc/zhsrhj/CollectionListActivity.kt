@@ -12,6 +12,7 @@ import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.startActivity
 import java.net.URL
 
 
@@ -24,7 +25,14 @@ class CollectionListActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                //message.setText(R.string.title_dashboard)
+                when (tlMain.selectedTabPosition) {
+                    0 -> {
+                        if (listView1.selectedItem != null) {
+                            startActivity<CollectionActivity>()
+                        }
+                    }
+                }
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
@@ -35,6 +43,11 @@ class CollectionListActivity : AppCompatActivity() {
         false
     }
 
+    lateinit var listView1: ListView
+    lateinit var listView2: ListView
+    lateinit var listView3: ListView
+    lateinit var listView4: ListView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection_list)
@@ -42,11 +55,14 @@ class CollectionListActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         tlMain.setupWithViewPager(vpDetail)
+
         val viewList = ArrayList<View>()
+
         val view1 = layoutInflater.inflate(R.layout.list_view, null)
         val view2 = layoutInflater.inflate(R.layout.list_view, null)
         val view3 = layoutInflater.inflate(R.layout.list_view, null)
         val view4 = layoutInflater.inflate(R.layout.list_view, null)
+
         viewList.add(view1)
         viewList.add(view2)
         viewList.add(view3)
@@ -78,10 +94,11 @@ class CollectionListActivity : AppCompatActivity() {
         //——————————————————————————————————重点理解——————————————————————————————————
         // 原来findviewById是View这个类中的方法，默认调用时其实应该是：this.findviewById();
         //由于listview标签的声明并不在当前的viewPager所在的xml布局中，所以直接通过findviewById方法是不能得到该listview的实例的。所以我们要用view1.findViewById（）方法找到listview
-        val listView1 = view1.findViewById(R.id.listview) as ListView
-        val listView2 = view2.findViewById(R.id.listview) as ListView
-        val listView3 = view3.findViewById(R.id.listview) as ListView
-        val listView4 = view4.findViewById(R.id.listview) as ListView
+        listView1 = view1.findViewById(R.id.listview) as ListView
+        listView2 = view2.findViewById(R.id.listview) as ListView
+        listView3 = view3.findViewById(R.id.listview) as ListView
+        listView4 = view4.findViewById(R.id.listview) as ListView
+
         //———————————————————————————————————重点理解——————————————————————————————————
 
         doAsync {
@@ -91,6 +108,7 @@ class CollectionListActivity : AppCompatActivity() {
             val adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
             val adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })
             val adapter4 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 })
+
             //为ListView设置适配器
             listView1.adapter = adapter1
             listView2.adapter = adapter2

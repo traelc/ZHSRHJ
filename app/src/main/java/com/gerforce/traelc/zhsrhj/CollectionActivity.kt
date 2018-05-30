@@ -25,10 +25,15 @@ class CollectionActivity : AppCompatActivity() {
         false
     }
 
+    lateinit var sel: AssignmentTemplate
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+
+
     }
 }
