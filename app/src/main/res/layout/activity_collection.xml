@@ -19,8 +19,181 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/tvDistinct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:text="区域"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvStreet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="街道"
+                app:layout_constraintStart_toStartOf="@+id/tvDistinct"
+                app:layout_constraintTop_toBottomOf="@+id/tvDistinct" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="名称"
+                app:layout_constraintStart_toStartOf="@+id/tvStreet"
+                app:layout_constraintTop_toBottomOf="@+id/tvStreet" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="地址"
+                app:layout_constraintStart_toStartOf="@+id/tvName"
+                app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+            <TextView
+                android:id="@+id/txtDistinct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                app:layout_constraintStart_toEndOf="@+id/tvDistinct"
+                app:layout_constraintTop_toTopOf="@+id/tvDistinct" />
+
+            <TextView
+                android:id="@+id/txtStreet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/txtDistinct"
+                app:layout_constraintTop_toTopOf="@+id/tvStreet" />
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/txtStreet"
+                app:layout_constraintTop_toTopOf="@+id/tvName" />
+
+            <TextView
+                android:id="@+id/txtAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/txtName"
+                app:layout_constraintTop_toTopOf="@+id/tvAddress" />
+
+            <TextView
+                android:id="@+id/tvSpecial1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="测评项目"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+
+            <TextView
+                android:id="@+id/tvSpecial2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="检查项目"
+                app:layout_constraintStart_toStartOf="@+id/tvSpecial1"
+                app:layout_constraintTop_toBottomOf="@+id/tvSpecial1" />
+
+            <TextView
+                android:id="@+id/tvSpecial3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="检查内容"
+                app:layout_constraintStart_toStartOf="@+id/tvSpecial2"
+                app:layout_constraintTop_toBottomOf="@+id/tvSpecial2" />
+
+            <Spinner
+                android:id="@+id/spSpecial1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="17dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtAddress"
+                app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
+
+            <Spinner
+                android:id="@+id/spSpecial2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toEndOf="@+id/spSpecial1"
+                app:layout_constraintStart_toStartOf="@+id/spSpecial1"
+                app:layout_constraintTop_toBottomOf="@+id/spSpecial1" />
+
+            <Spinner
+                android:id="@+id/spSpecial3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintEnd_toEndOf="@+id/spSpecial2"
+                app:layout_constraintStart_toStartOf="@+id/spSpecial2"
+                app:layout_constraintTop_toBottomOf="@+id/spSpecial2" />
+
+            <EditText
+                android:id="@+id/txtProblem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="地点描述"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/spSpecial3"
+                app:layout_constraintStart_toStartOf="@+id/tvSpecial3"
+                app:layout_constraintTop_toBottomOf="@+id/tvSpecial3" />
+
+            <TextView
+                android:id="@+id/tvScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="单位扣分"
+                app:layout_constraintStart_toStartOf="@+id/txtProblem"
+                app:layout_constraintTop_toBottomOf="@+id/txtProblem" />
+
+            <TextView
+                android:id="@+id/txtScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/spSpecial3"
+                app:layout_constraintTop_toTopOf="@+id/tvScore" />
+
+            <EditText
+                android:id="@+id/txtCount"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="数量"
+                android:inputType="numberDecimal"
+                app:layout_constraintStart_toStartOf="@+id/tvScore"
+                app:layout_constraintTop_toBottomOf="@+id/tvScore" />
+
+            <ToggleButton
+                android:id="@+id/tbFinished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ToggleButton"
+                android:textOff="未完成"
+                android:textOn="完成"
+                app:layout_constraintEnd_toEndOf="@+id/txtProblem"
+                app:layout_constraintTop_toTopOf="@+id/txtCount" />
+
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivPhoto"
                 android:layout_width="0dp"
                 android:layout_height="500dp"
                 android:layout_marginBottom="20dp"
@@ -31,179 +204,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText4"
+                app:layout_constraintTop_toBottomOf="@+id/txtCount"
                 app:srcCompat="@mipmap/n1" />
 
-            <ToggleButton
-                android:id="@+id/toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ToggleButton"
-                android:textOff="未完成"
-                android:textOn="完成"
-                app:layout_constraintEnd_toEndOf="@+id/editText3"
-                app:layout_constraintTop_toTopOf="@+id/editText4" />
-
-            <EditText
-                android:id="@+id/editText4"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="数量"
-                android:inputType="numberDecimal"
-                app:layout_constraintStart_toStartOf="@+id/textView13"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-            <EditText
-                android:id="@+id/editText3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="地点描述"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="@+id/spSpecial3"
-                app:layout_constraintStart_toStartOf="@+id/textView11"
-                app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/spSpecial3"
-                app:layout_constraintTop_toTopOf="@+id/textView13" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="单位扣分"
-                app:layout_constraintStart_toStartOf="@+id/editText3"
-                app:layout_constraintTop_toBottomOf="@+id/editText3" />
-
-            <Spinner
-                android:id="@+id/spSpecial3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/spSpecial2"
-                app:layout_constraintStart_toStartOf="@+id/spSpecial2"
-                app:layout_constraintTop_toBottomOf="@+id/spSpecial2" />
-
-            <Spinner
-                android:id="@+id/spSpecial2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/spSpecial1"
-                app:layout_constraintStart_toStartOf="@+id/spSpecial1"
-                app:layout_constraintTop_toBottomOf="@+id/spSpecial1" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="检查内容"
-                app:layout_constraintStart_toStartOf="@+id/textView10"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="检查项目"
-                app:layout_constraintStart_toStartOf="@+id/textView9"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="测评项目"
-                app:layout_constraintStart_toStartOf="@+id/textView7"
-                app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-            <Spinner
-                android:id="@+id/spSpecial1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="32dp"
-                android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ttt"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toTopOf="@+id/textView7" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="地址"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toTopOf="@+id/textView5" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="名称"
-                app:layout_constraintStart_toStartOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toTopOf="@+id/textView3" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="街道"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
-                android:text="区域"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toTopOf="@+id/textView2" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
