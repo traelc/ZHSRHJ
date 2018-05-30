@@ -25,7 +25,7 @@ class CollectionActivity : AppCompatActivity() {
         false
     }
 
-    lateinit var sel: AssignmentTemplate
+    lateinit var assingment: AssignmentTemplate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +33,11 @@ class CollectionActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        assingment = intent.getSerializableExtra("selectedItem") as AssignmentTemplate
+        txtAddress.text = assingment.Address
+        txtDistinct.text = assingment.DistrictName
+        txtStreet.text = assingment.StreetName
+        txtName.text = assingment.Name
 
 
     }

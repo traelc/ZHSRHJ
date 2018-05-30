@@ -28,7 +28,7 @@ class CollectionListActivity : AppCompatActivity() {
                 when (tlMain.selectedTabPosition) {
                     0 -> {
                         if (listView1.selectedItem != null) {
-                            startActivity<CollectionActivity>()
+                            startActivity<CollectionActivity>("selectedItem" to listView1.selectedItem as AssignmentTemplate)
                         }
                     }
                 }
