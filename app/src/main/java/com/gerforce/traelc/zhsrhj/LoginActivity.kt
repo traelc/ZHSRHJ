@@ -39,12 +39,12 @@ class LoginActivity : AppCompatActivity() {
                                 Util.inst.user = Gson().fromJson(body.string(), User::class.java)
                                 startActivity<MainActivity>()
                             } else {
-                                alert("用户名和密码错误！") {}.show()
+                                uiThread { alert("用户名和密码错误！") {}.show() }
                             }
                             response.close()
                         }
                     } catch (e: Exception) {
-                        alert("用户名和密码错误！") {}.show()
+                        uiThread { alert("网络错误！") {}.show() }
                     } finally {
                         uiThread { progress.hide() }
                     }

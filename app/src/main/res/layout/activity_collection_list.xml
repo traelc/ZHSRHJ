@@ -27,29 +27,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/ti1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="居住区" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/ti2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="道路(白天)" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/ti3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="道路(早上)" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/ti4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="道路(晚上)" />
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager

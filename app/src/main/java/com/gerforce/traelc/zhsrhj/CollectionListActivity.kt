@@ -57,7 +57,6 @@ class CollectionListActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         tlMain.setupWithViewPager(vpDetail)
-
         val viewList = ArrayList<View>()
 
         val view1 = layoutInflater.inflate(R.layout.list_view, null)
@@ -69,6 +68,7 @@ class CollectionListActivity : AppCompatActivity() {
         viewList.add(view2)
         viewList.add(view3)
         viewList.add(view4)
+
 
         vpDetail.adapter = (object : PagerAdapter() {
             override fun getCount(): Int {
@@ -90,6 +90,16 @@ class CollectionListActivity : AppCompatActivity() {
             override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
                 //这个方法从viewPager中移动当前的view。（划过的时候）
                 vpDetail.removeView(viewList[position])
+            }
+
+            override fun getPageTitle(position: Int): CharSequence? {
+                return when (position) {
+                    0 -> "居住区"
+                    1 -> "道路(白天)"
+                    2 -> "道路(早上)"
+                    3 -> "道路(晚上)"
+                    else -> super.getPageTitle(position)
+                }
             }
         })
 
@@ -120,8 +130,5 @@ class CollectionListActivity : AppCompatActivity() {
 
             }
         }
-
     }
-
-
 }
