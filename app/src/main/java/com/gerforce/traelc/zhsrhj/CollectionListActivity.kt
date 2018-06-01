@@ -1,9 +1,11 @@
 package com.gerforce.traelc.zhsrhj
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.PagerAdapter
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_collection_list.*
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.uiThread
 import java.net.URL
 
 
@@ -47,6 +50,7 @@ class CollectionListActivity : AppCompatActivity() {
     lateinit var listView2: ListView
     lateinit var listView3: ListView
     lateinit var listView4: ListView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,21 +104,26 @@ class CollectionListActivity : AppCompatActivity() {
         listView4 = view4.findViewById(R.id.listview) as ListView
 
         //———————————————————————————————————重点理解——————————————————————————————————
-
         doAsync {
-            val data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Collection?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
+            try {
+                val data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Android?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
+                val adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
+                val adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
+                val adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })
+                val adapter4 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 })
+                uiThread {
+                    //为ListView设置适配器
+                    listView1.adapter = adapter1
+                    listView2.adapter = adapter2
+                    listView3.adapter = adapter3
+                    listView4.adapter = adapter4
+                }
+            } catch (e: Exception) {
 
-            val adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
-            val adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
-            val adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })
-            val adapter4 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 })
-
-            //为ListView设置适配器
-            listView1.adapter = adapter1
-            listView2.adapter = adapter2
-            listView3.adapter = adapter3
-            listView4.adapter = adapter4
+            }
         }
 
     }
+
+
 }

@@ -21,7 +21,7 @@ class CollectionListAdapter(private val context: Context, private val Collection
         var view = convertView
         val holder: ViewHolder
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.list_view, null)
+            view = LayoutInflater.from(context).inflate(R.layout.list_view_template, null)
             holder = ViewHolder()
 
             holder.tbAddress = view.findViewById(R.id.tbAddress)

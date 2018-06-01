@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                     } catch (e: Exception) {
                         alert("用户名和密码错误！") {}.show()
                     } finally {
-                        progress.hide()
+                        uiThread { progress.hide() }
                     }
                 }
             }
@@ -70,7 +70,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        navigation.selectedItemId = navigation.menu.getItem(1).itemId
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
         if (special.isNullOrEmpty()) {
             getSpecial()
         } else {
