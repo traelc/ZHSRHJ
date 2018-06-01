@@ -1,11 +1,9 @@
 package com.gerforce.traelc.zhsrhj
 
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.PagerAdapter
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_collection_list.*
 import android.view.ViewGroup
