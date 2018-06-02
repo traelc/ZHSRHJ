@@ -39,9 +39,11 @@ class LoginActivity : AppCompatActivity() {
                                 Util.inst.user = Gson().fromJson(body.string(), User::class.java)
                                 startActivity<MainActivity>()
                             } else {
-                                uiThread { alert("用户名和密码错误！") {}.show() }
+                                uiThread { alert("用户名或密码错误！") {}.show() }
                             }
                             response.close()
+                        } else {
+                            uiThread { alert("用户名或密码错误！") {}.show() }
                         }
                     } catch (e: Exception) {
                         uiThread { alert("网络错误！") {}.show() }
@@ -70,8 +72,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        navigation.selectedItemId = navigation.menu.getItem(1).itemId
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navi_login.selectedItemId = navi_login.menu.getItem(1).itemId
+        navi_login.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         if (special.isNullOrEmpty()) {
             getSpecial()

@@ -1,7 +1,5 @@
 package com.gerforce.traelc.zhsrhj
 
-import android.os.Parcelable
-import java.util.*
 
 data class User(var UserID: Int, var LoginName: String, var UserName: String)
 data class Special1Template(var id: Int, var name: String, var mode: Byte, var Special2Template: List<Special2Template>)

@@ -2,44 +2,52 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/list_view_active"
+    android:padding="5dp"
     android:stretchColumns="2">
 
-    <TableRow>
+    <TableRow android:paddingBottom="2dp">
         <TextView
             android:id="@+id/tbDistrict"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
-
+            android:width="70dp"
+            android:duplicateParentState="true"
+            android:textColor="@drawable/list_view_text_active" />
         <TextView
             android:id="@+id/tbStreet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:width="100dp"
+            android:duplicateParentState="true"
+            android:textColor="@drawable/list_view_text_active" />
 
         <TextView
             android:id="@+id/tbName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:duplicateParentState="true"
+            android:textColor="@drawable/list_view_text_active" />
     </TableRow>
 
-    <TableRow>
+    <TableRow android:paddingTop="2dp">
         <TextView
             android:id="@+id/tbStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:duplicateParentState="true"
+            android:textColor="@drawable/list_view_text_active" />
         <TextView
             android:id="@+id/tbModeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:duplicateParentState="true"
+            android:textColor="@drawable/list_view_text_active" />
         <TextView
             android:id="@+id/tbAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:duplicateParentState="true"
+            android:textColor="@drawable/list_view_text_active" />
     </TableRow>
-
 </TableLayout>

@@ -11,9 +11,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.*
 import java.net.URL
 
 
@@ -21,58 +19,89 @@ class CollectionListActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home -> {
-                //message.setText(R.string.title_home)
+            R.id.navigation_return -> {
+                this.finish()
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
+            R.id.navigation_refresh -> {
+                refresh()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_detail -> {
                 when (tlMain.selectedTabPosition) {
                     0 -> {
-                        if (listView1.selectedItem != null) {
-                            startActivity<CollectionActivity>("selectedItem" to listView1.selectedItem as AssignmentTemplate)
+                        if (sel0 != -1) {
+                            startActivity<CollectionActivity>("selectedItem" to adapter0.getItem(sel0) as AssignmentTemplate)
+                        } else {
+                            alert("请选择对应记录！") {}.show()
+                        }
+                    }
+                    1 -> {
+                        if (sel1 != -1) {
+                            startActivity<CollectionActivity>("selectedItem" to adapter1.getItem(sel1) as AssignmentTemplate)
+                        } else {
+                            alert("请选择对应记录！") {}.show()
+                        }
+                    }
+                    2 -> {
+                        if (sel2 != -1) {
+                            startActivity<CollectionActivity>("selectedItem" to adapter2.getItem(sel2) as AssignmentTemplate)
+                        } else {
+                            alert("请选择对应记录！") {}.show()
+                        }
+                    }
+                    3 -> {
+                        if (sel3 != -1) {
+                            startActivity<CollectionActivity>("selectedItem" to adapter3.getItem(sel3) as AssignmentTemplate)
+                        } else {
+                            alert("请选择对应记录！") {}.show()
                         }
                     }
                 }
-
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                // message.setText(R.string.title_notifications)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-    lateinit var listView1: ListView
-    lateinit var listView2: ListView
-    lateinit var listView3: ListView
-    lateinit var listView4: ListView
+    private lateinit var adapter0: CollectionListAdapter
+    private lateinit var adapter1: CollectionListAdapter
+    private lateinit var adapter2: CollectionListAdapter
+    private lateinit var adapter3: CollectionListAdapter
 
+    private lateinit var listView0: ListView
+    private lateinit var listView1: ListView
+    private lateinit var listView2: ListView
+    private lateinit var listView3: ListView
+
+    private var sel0: Int = -1
+    private var sel1: Int = -1
+    private var sel2: Int = -1
+    private var sel3: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection_list)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
         tlMain.setupWithViewPager(vpDetail)
+
+        this.navi_collection_list.selectedItemId = this.navi_collection_list.menu.getItem(2).itemId
+        this.navi_collection_list.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
         val viewList = ArrayList<View>()
 
+        val view0 = layoutInflater.inflate(R.layout.list_view, null)
         val view1 = layoutInflater.inflate(R.layout.list_view, null)
         val view2 = layoutInflater.inflate(R.layout.list_view, null)
         val view3 = layoutInflater.inflate(R.layout.list_view, null)
-        val view4 = layoutInflater.inflate(R.layout.list_view, null)
 
+        viewList.add(view0)
         viewList.add(view1)
         viewList.add(view2)
         viewList.add(view3)
-        viewList.add(view4)
-
 
         vpDetail.adapter = (object : PagerAdapter() {
             override fun getCount(): Int {
-                //这个方法是返回总共有几个滑动的页面（）
                 return viewList.size
             }
 
@@ -82,13 +111,11 @@ class CollectionListActivity : AppCompatActivity() {
             }
 
             override fun instantiateItem(container: ViewGroup, position: Int): Any {
-                //这个方法返回一个对象，该对象表明PagerAapter选择哪个对象放在当前的ViewPager中。这里我们返回当前的页面
                 vpDetail.addView(viewList[position])
                 return viewList[position]
             }
 
             override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-                //这个方法从viewPager中移动当前的view。（划过的时候）
                 vpDetail.removeView(viewList[position])
             }
 
@@ -103,30 +130,40 @@ class CollectionListActivity : AppCompatActivity() {
             }
         })
 
-        //——————————————————————————————————重点理解——————————————————————————————————
-        // 原来findviewById是View这个类中的方法，默认调用时其实应该是：this.findviewById();
-        //由于listview标签的声明并不在当前的viewPager所在的xml布局中，所以直接通过findviewById方法是不能得到该listview的实例的。所以我们要用view1.findViewById（）方法找到listview
-        listView1 = view1.findViewById(R.id.listview) as ListView
-        listView2 = view2.findViewById(R.id.listview) as ListView
-        listView3 = view3.findViewById(R.id.listview) as ListView
-        listView4 = view4.findViewById(R.id.listview) as ListView
+        listView0 = view0.find(R.id.listview)
+        listView1 = view1.find(R.id.listview)
+        listView2 = view2.find(R.id.listview)
+        listView3 = view3.find(R.id.listview)
 
-        //———————————————————————————————————重点理解——————————————————————————————————
+        listView0.setOnItemClickListener { parent, view, position, id ->
+            sel0 = position
+        }
+        listView1.setOnItemClickListener { parent, view, position, id ->
+            sel1 = position
+        }
+        listView2.setOnItemClickListener { parent, view, position, id ->
+            sel2 = position
+        }
+        listView3.setOnItemClickListener { parent, view, position, id ->
+            sel3 = position
+        }
+        refresh()
+    }
+
+    private fun refresh() {
         doAsync {
-            try {
-                val data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Android?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
-                val adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
-                val adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
-                val adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })
-                val adapter4 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 })
-                uiThread {
-                    //为ListView设置适配器
-                    listView1.adapter = adapter1
-                    listView2.adapter = adapter2
-                    listView3.adapter = adapter3
-                    listView4.adapter = adapter4
-                }
-            } catch (e: Exception) {
+            val data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Android?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
+            adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
+            adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
+            adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })
+            adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 })
+
+            uiThread {
+                listView0.adapter = adapter0
+                listView1.adapter = adapter1
+                listView2.adapter = adapter2
+                listView3.adapter = adapter3
+
 
             }
         }

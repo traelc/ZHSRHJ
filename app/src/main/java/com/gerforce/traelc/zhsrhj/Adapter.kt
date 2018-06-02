@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.TextView
+import org.jetbrains.anko.find
 
 
-//ViewHolder中的属性使用关键字lateinit延迟初始化
 class CollectionListAdapter(private val context: Context, private val CollectionList: List<AssignmentTemplate>) : BaseAdapter() {
     override fun getCount(): Int = CollectionList.size
 
@@ -24,12 +24,12 @@ class CollectionListAdapter(private val context: Context, private val Collection
             view = LayoutInflater.from(context).inflate(R.layout.list_view_template, null)
             holder = ViewHolder()
 
-            holder.tbAddress = view.findViewById(R.id.tbAddress)
-            holder.tbDistrict = view.findViewById(R.id.tbDistrict)
-            holder.tbModeName = view.findViewById(R.id.tbModeName)
-            holder.tbName = view.findViewById(R.id.tbName)
-            holder.tbStartTime = view.findViewById(R.id.tbStartTime)
-            holder.tbStreet = view.findViewById(R.id.tbStreet)
+            holder.tbAddress = view.find(R.id.tbAddress)
+            holder.tbDistrict = view.find(R.id.tbDistrict)
+            holder.tbModeName = view.find(R.id.tbModeName)
+            holder.tbName = view.find(R.id.tbName)
+            holder.tbStartTime = view.find(R.id.tbStartTime)
+            holder.tbStreet = view.find(R.id.tbStreet)
             view.tag = holder
         } else {
             holder = view.tag as ViewHolder
