@@ -1,14 +1,25 @@
 package com.gerforce.traelc.zhsrhj
 
+import android.Manifest
+import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.SimpleAdapter
 import kotlinx.android.synthetic.main.activity_collection.*
-import org.jetbrains.anko.sdk25.coroutines.onItemSelectedListener
-import android.widget.AdapterView.OnItemSelectedListener
-import kotlinx.android.synthetic.main.activity_collection_list.*
+import android.provider.MediaStore
+import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Environment.getExternalStorageDirectory
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Environment
+import android.content.ContentValues
+import java.text.SimpleDateFormat
+import java.util.*
+import android.content.pm.PackageManager
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -16,11 +27,19 @@ class CollectionActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_back -> {
-                //message.setText(R.string.title_home)
+                this.finish()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_upload -> {
-                //message.setText(R.string.title_dashboard)
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        photograph()
+                    } else {
+                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+                    }
+                } else {
+                    photograph()
+                }
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_send -> {
@@ -31,7 +50,36 @@ class CollectionActivity : AppCompatActivity() {
         false
     }
 
-    lateinit var assingment: AssignmentTemplate
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
+        if (requestCode == 0) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                photograph()
+            }
+        }
+    }
+
+    private fun photograph() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val timeStampFormat = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss")
+        val filename = timeStampFormat.format(Date())
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, filename)
+        photoUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+        startActivityForResult(intent, 0)
+    }
+
+    private lateinit var assignment: AssignmentTemplate
+
+    private lateinit var adSp1: ArrayAdapter<Special1Template>
+    private lateinit var adSp2: ArrayAdapter<Special2Template>
+    private lateinit var adSp3: ArrayAdapter<Special3Template>
+
+    private lateinit var uploadPhoto: Bitmap
+
+    private lateinit var photoUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,33 +87,71 @@ class CollectionActivity : AppCompatActivity() {
 
         navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        /*   assingment = intent.getSerializableExtra("selectedItem") as AssignmentTemplate
-           txtAddress.text = assingment.Address
-           txtDistinct.text = assingment.DistrictName
-           txtStreet.text = assingment.StreetName
-           txtName.text = assingment.Name
+        assignment = intent.getParcelableExtra("selectedItem") as AssignmentTemplate
+        title = when (assignment.AssignmentType) {
+            0 -> "地点位置(居住区)"
+            1 -> "地点位置(白天)"
+            2 -> "地点位置(早上)"
+            3 -> "地点位置(晚上)"
+            else -> "信息采集"
+        }
+        txtAddress.text = assignment.Address
+        txtDistinct.text = assignment.DistrictName
+        txtStreet.text = assignment.StreetName
+        txtName.text = assignment.Name
 
-       var adSp1 = ArrayAdapter<Special1Template>(this, android.R.layout.simple_spinner_item, Util.inst.special1)
+        adSp1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Util.inst.special1)
 
-           spSpecial1.adapter = adSp1
+        spSpecial1.adapter = adSp1
 
-           spSpecial1.setOnItemClickListener { parent, view, position, id ->
-               var adSp2 = ArrayAdapter<Special2Template>(this, android.R.layout.simple_spinner_item, adSp1.getItem(position).Special2Template)
-               spSpecial2.adapter = adSp2
+        spSpecial1.onItemSelectedListener = Sp1SelectedListener()
+        spSpecial2.onItemSelectedListener = Sp2SelectedListener()
+        spSpecial3.onItemSelectedListener = Sp3SelectedListener()
+    }
 
-               spSpecial2.setOnItemClickListener { parent, view, position, id ->
-                   var adSp3 = ArrayAdapter<Special3Template>(this, android.R.layout.simple_spinner_item, adSp2.getItem(position).Special3Template)
-                   spSpecial3.adapter = adSp3
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            ivPhoto.setImageBitmap(BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri)))
+        }
+    }
 
-                   spSpecial3.setOnItemClickListener { parent, view, position, id ->
-                       var item = adSp3.getItem(position)
+    internal inner class Sp1SelectedListener : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            if (assignment.Mode == 0) {
+                when (assignment.AssignmentType) {
+                    0 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template)
+                    1 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.day == true } })
+                    2 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.morning == true } })
+                    3 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.night == true } })
+                }
+            } else {
+                adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template)
+            }
 
-                       txtScore.text = item.score
+            spSpecial2.adapter = adSp2
+        }
 
-                   }
-               }
-           }
-   */
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+        }
+    }
 
+    internal inner class Sp2SelectedListener : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            adSp3 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp2.getItem(position).Special3Template)
+            spSpecial3.adapter = adSp3
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+        }
+    }
+
+    internal inner class Sp3SelectedListener : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            var item = adSp3.getItem(position)
+            txtScore.text = item.score
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+        }
     }
 }
