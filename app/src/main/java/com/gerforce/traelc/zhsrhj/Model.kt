@@ -23,6 +23,7 @@ data class Special3Template(var id: Int, var name: String, var sp2id: Int, var s
     }
 }
 
+data class CollectionSubmit(var Problem: String?, var Count: Double, var PhotoSource: ByteArray?, var Special3ID: Int, var AssignmentID: Int, var IsFinished: Boolean)
 
 data class AssignmentTemplate(var AssignmentID: Int, var UserID: Int, var Mode: Int, var QuarterID: Int?, var RoadID: Int?, var IsFinished: Boolean, var CreateDate: String,
                               var AssignmentDate: String, var StreetName: String, var DistrictName: String, var Longitude: Double, var Latitude: Double, var ModeName: String,

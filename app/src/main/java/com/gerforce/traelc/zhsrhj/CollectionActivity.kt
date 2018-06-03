@@ -20,6 +20,11 @@ import android.content.ContentValues
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.pm.PackageManager
+import android.graphics.Matrix
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.yesButton
+import java.nio.ByteBuffer
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -43,7 +48,44 @@ class CollectionActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_send -> {
-                //message.setText(R.string.title_notifications)
+                if (!txtCount.text.toString().matches(Regex("^[0-9]+([.][0-9]+)?$"))) {
+                    alert { "数量不能为空并且必须输入数字或小数，请重新输入！" }
+                    return@OnNavigationItemSelectedListener false
+                }
+                if (txtCount.text.toString() != "0" && uploadPhoto == null) {
+                    alert { "数量不为0时必须上传照片！" }
+                    return@OnNavigationItemSelectedListener false
+                }
+
+                alert("是否发送？") {
+                    yesButton {
+                        var add = CollectionSubmit(
+                                AssignmentID = assignment.AssignmentID,
+                                Count = txtCount.text.toString().toDouble(),
+                                Special3ID = 1,
+                                Problem = txtProblem.text.toString(),
+                                IsFinished = tbFinished.isChecked,
+                                PhotoSource = null
+                        )
+
+                        if (uploadPhoto != null) {
+                            var width = uploadPhoto!!.width
+                            var height = uploadPhoto!!.height
+                            var matrix = Matrix()
+                            matrix.preScale(0.125.toFloat(), 0.125.toFloat());
+                            var newBM = Bitmap.createBitmap(uploadPhoto, 0, 0, width, height, matrix, false)
+                            if (newBM != uploadPhoto) {
+                                uploadPhoto!!.recycle()
+                            }
+
+                            var buf = ByteBuffer.allocate(newBM!!.byteCount)
+                            newBM!!.copyPixelsToBuffer(buf)
+                            add.PhotoSource = buf.array()
+                        }
+                    }
+                    noButton { }
+                }.show()
+
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -77,7 +119,7 @@ class CollectionActivity : AppCompatActivity() {
     private lateinit var adSp2: ArrayAdapter<Special2Template>
     private lateinit var adSp3: ArrayAdapter<Special3Template>
 
-    private lateinit var uploadPhoto: Bitmap
+    private var uploadPhoto: Bitmap? = null
 
     private lateinit var photoUri: Uri
 
@@ -101,7 +143,6 @@ class CollectionActivity : AppCompatActivity() {
         txtName.text = assignment.Name
 
         adSp1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Util.inst.special1)
-
         spSpecial1.adapter = adSp1
 
         spSpecial1.onItemSelectedListener = Sp1SelectedListener()
@@ -127,7 +168,6 @@ class CollectionActivity : AppCompatActivity() {
             } else {
                 adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template)
             }
-
             spSpecial2.adapter = adSp2
         }
 
