@@ -21,9 +21,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.content.pm.PackageManager
 import android.graphics.Matrix
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.noButton
-import org.jetbrains.anko.yesButton
+import com.google.gson.Gson
+import okhttp3.*
+import org.jetbrains.anko.*
 import java.nio.ByteBuffer
 
 
@@ -56,9 +56,11 @@ class CollectionActivity : AppCompatActivity() {
                     alert { "数量不为0时必须上传照片！" }
                     return@OnNavigationItemSelectedListener false
                 }
+                var progress = indeterminateProgressDialog("发送中")
 
                 alert("是否发送？") {
                     yesButton {
+                        progress.show()
                         var add = CollectionSubmit(
                                 AssignmentID = assignment.AssignmentID,
                                 Count = txtCount.text.toString().toDouble(),
@@ -81,10 +83,37 @@ class CollectionActivity : AppCompatActivity() {
                             var buf = ByteBuffer.allocate(newBM!!.byteCount)
                             newBM!!.copyPixelsToBuffer(buf)
                             add.PhotoSource = buf.array()
+
+                            doAsync {
+                                try {
+                                    val client = OkHttpClient()
+                                    val requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), Gson().toJson(add))
+                                    val request = Request.Builder()
+                                            .url(Util.inst.interfaceUrl + "Collection")
+                                            .post(requestBody)
+                                            .build()
+                                    val response = client.newCall(request).execute()
+                                    if (response.isSuccessful) {
+                                        if (add.IsFinished) {
+                                            finish()
+                                        } else {
+                                            uiThread { alert("发送成功！") {}.show() }
+                                        }
+                                        response.close()
+                                    } else {
+                                        uiThread { alert("发送失败！") {}.show() }
+                                    }
+                                } catch (e: Exception) {
+                                    uiThread { alert("网络错误！") {}.show() }
+                                } finally {
+                                    uiThread { progress.hide() }
+                                }
+                            }
                         }
                     }
                     noButton { }
-                }.show()
+                }
+                        .show()
 
                 return@OnNavigationItemSelectedListener true
             }
