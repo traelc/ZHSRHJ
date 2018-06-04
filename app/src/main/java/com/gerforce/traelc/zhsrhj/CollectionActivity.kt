@@ -12,10 +12,8 @@ import kotlinx.android.synthetic.main.activity_collection.*
 import android.provider.MediaStore
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Environment.getExternalStorageDirectory
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Environment
 import android.content.ContentValues
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,8 +21,13 @@ import android.content.pm.PackageManager
 import android.graphics.Matrix
 import com.google.gson.Gson
 import okhttp3.*
+import okio.Utf8
+import android.util.Base64
 import org.jetbrains.anko.*
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.nio.ByteBuffer
+import kotlin.experimental.and
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -56,10 +59,11 @@ class CollectionActivity : AppCompatActivity() {
                     alert { "数量不为0时必须上传照片！" }
                     return@OnNavigationItemSelectedListener false
                 }
-                var progress = indeterminateProgressDialog("发送中")
+
 
                 alert("是否发送？") {
                     yesButton {
+                        var progress = indeterminateProgressDialog("发送中")
                         progress.show()
                         var add = CollectionSubmit(
                                 AssignmentID = assignment.AssignmentID,
@@ -79,35 +83,37 @@ class CollectionActivity : AppCompatActivity() {
                             if (newBM != uploadPhoto) {
                                 uploadPhoto!!.recycle()
                             }
-
                             var buf = ByteBuffer.allocate(newBM!!.byteCount)
                             newBM!!.copyPixelsToBuffer(buf)
-                            add.PhotoSource = buf.array()
+                            val stream = ByteArrayOutputStream()
+                            newBM.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                            val b = stream.toByteArray()
+                            add.PhotoSource = Base64Coder.encodeLines(b)
 
-                            doAsync {
-                                try {
-                                    val client = OkHttpClient()
-                                    val requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), Gson().toJson(add))
-                                    val request = Request.Builder()
-                                            .url(Util.inst.interfaceUrl + "Collection")
-                                            .post(requestBody)
-                                            .build()
-                                    val response = client.newCall(request).execute()
-                                    if (response.isSuccessful) {
-                                        if (add.IsFinished) {
-                                            finish()
-                                        } else {
-                                            uiThread { alert("发送成功！") {}.show() }
-                                        }
-                                        response.close()
+                        }
+                        doAsync {
+                            try {
+                                val client = OkHttpClient()
+                                val requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), Gson().toJson(add))
+                                val request = Request.Builder()
+                                        .url(Util.inst.interfaceUrl + "Android")
+                                        .post(requestBody)
+                                        .build()
+                                val response = client.newCall(request).execute()
+                                if (response.isSuccessful) {
+                                    if (add.IsFinished) {
+                                        finish()
                                     } else {
-                                        uiThread { alert("发送失败！") {}.show() }
+                                        uiThread { alert("发送成功！") {}.show() }
                                     }
-                                } catch (e: Exception) {
-                                    uiThread { alert("网络错误！") {}.show() }
-                                } finally {
-                                    uiThread { progress.hide() }
+                                    response.close()
+                                } else {
+                                    uiThread { alert("发送失败！") {}.show() }
                                 }
+                            } catch (e: Exception) {
+                                uiThread { alert("网络错误！") {}.show() }
+                            } finally {
+                                uiThread { progress.hide() }
                             }
                         }
                     }
@@ -181,7 +187,8 @@ class CollectionActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            ivPhoto.setImageBitmap(BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri)))
+            uploadPhoto = BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri))
+            ivPhoto.setImageBitmap(uploadPhoto)
         }
     }
 
