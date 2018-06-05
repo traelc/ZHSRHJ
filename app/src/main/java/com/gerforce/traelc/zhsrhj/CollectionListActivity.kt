@@ -1,5 +1,9 @@
 package com.gerforce.traelc.zhsrhj
 
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.PagerAdapter
@@ -11,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_collection.*
 import org.jetbrains.anko.*
 import java.net.URL
 
@@ -31,28 +36,28 @@ class CollectionListActivity : AppCompatActivity() {
                 when (tlMain.selectedTabPosition) {
                     0 -> {
                         if (sel0 != -1) {
-                            startActivity<CollectionActivity>("selectedItem" to adapter0.getItem(sel0) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter0.getItem(sel0) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
                     }
                     1 -> {
                         if (sel1 != -1) {
-                            startActivity<CollectionActivity>("selectedItem" to adapter1.getItem(sel1) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter1.getItem(sel1) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
                     }
                     2 -> {
                         if (sel2 != -1) {
-                            startActivity<CollectionActivity>("selectedItem" to adapter2.getItem(sel2) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter2.getItem(sel2) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
                     }
                     3 -> {
                         if (sel3 != -1) {
-                            startActivity<CollectionActivity>("selectedItem" to adapter3.getItem(sel3) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter3.getItem(sel3) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
@@ -62,6 +67,12 @@ class CollectionListActivity : AppCompatActivity() {
             }
         }
         false
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 0 && resultCode == 100) {
+            refresh()
+        }
     }
 
     private lateinit var adapter0: CollectionListAdapter

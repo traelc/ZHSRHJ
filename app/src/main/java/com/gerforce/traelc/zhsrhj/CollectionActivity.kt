@@ -21,13 +21,9 @@ import android.content.pm.PackageManager
 import android.graphics.Matrix
 import com.google.gson.Gson
 import okhttp3.*
-import okio.Utf8
-import android.util.Base64
 import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.nio.ByteBuffer
-import kotlin.experimental.and
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -102,9 +98,15 @@ class CollectionActivity : AppCompatActivity() {
                                 val response = client.newCall(request).execute()
                                 if (response.isSuccessful) {
                                     if (add.IsFinished) {
+                                        setResult(100, intent)
                                         finish()
                                     } else {
-                                        uiThread { alert("发送成功！") {}.show() }
+                                        uploadPhoto = null
+                                        uiThread {
+                                            alert("发送成功！") {}.show()
+                                            txtCount.setText("0")
+                                            ivPhoto.setImageResource(R.mipmap.n1)
+                                        }
                                     }
                                     response.close()
                                 } else {

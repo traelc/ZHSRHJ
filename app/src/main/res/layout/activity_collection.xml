@@ -99,31 +99,37 @@
                 android:id="@+id/tvSpecial1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="测评项目"
                 android:textSize="@dimen/text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/spSpecial1"
                 app:layout_constraintStart_toStartOf="@+id/tvAddress"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+                app:layout_constraintTop_toTopOf="@+id/spSpecial1" />
 
             <TextView
                 android:id="@+id/tvSpecial2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="检查项目"
                 android:textSize="@dimen/text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/spSpecial2"
                 app:layout_constraintStart_toStartOf="@+id/tvSpecial1"
-                app:layout_constraintTop_toBottomOf="@+id/tvSpecial1" />
+                app:layout_constraintTop_toTopOf="@+id/spSpecial2" />
 
             <TextView
                 android:id="@+id/tvSpecial3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="检查内容"
                 android:textSize="@dimen/text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/spSpecial3"
                 app:layout_constraintStart_toStartOf="@+id/tvSpecial2"
-                app:layout_constraintTop_toBottomOf="@+id/tvSpecial2" />
+                app:layout_constraintTop_toTopOf="@+id/spSpecial3" />
 
             <Spinner
                 android:id="@+id/spSpecial1"
@@ -199,11 +205,13 @@
                 android:id="@+id/tvCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:text="数量"
                 android:textSize="@dimen/text_size"
+                app:layout_constraintBottom_toBottomOf="@+id/txtCount"
                 app:layout_constraintStart_toStartOf="@+id/tvScore"
-                app:layout_constraintTop_toBottomOf="@+id/tvScore" />
+                app:layout_constraintTop_toTopOf="@+id/txtCount" />
 
             <EditText
                 android:id="@+id/txtCount"
