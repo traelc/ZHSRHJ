@@ -24,6 +24,9 @@ import okhttp3.*
 import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
+import android.content.ContentUris
+import android.provider.DocumentsContract
+import org.jetbrains.anko.internals.AnkoInternals.getContext
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -35,9 +38,16 @@ class CollectionActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_album -> {
-                var intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                intent.type = "image/*"
-                startActivityForResult(intent, 1)
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        visitAlbum()
+                    } else {
+                        requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                    }
+                } else {
+                    visitAlbum()
+                }
+                return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_upload -> {
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -141,6 +151,17 @@ class CollectionActivity : AppCompatActivity() {
                 photograph()
             }
         }
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                visitAlbum()
+            }
+        }
+    }
+
+    private fun visitAlbum() {
+        var intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, 1)
     }
 
     private fun photograph() {
@@ -153,6 +174,58 @@ class CollectionActivity : AppCompatActivity() {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
         startActivityForResult(intent, 0)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            0 -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    uploadPhoto = BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri))
+                    ivPhoto.setImageBitmap(uploadPhoto)
+                }
+            }
+            1 -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    var imagePath: String? = null
+                    var uri = data.data;
+                    if (DocumentsContract.isDocumentUri(this, uri)) {
+                        //如果是document类型的uri,则通过document id来处理
+                        var docId = DocumentsContract.getDocumentId(uri)
+                        if ("com.android.providers.media.documents" == uri.authority) {
+                            var id = docId.split(":")[1]
+                            var selection = MediaStore.Images.Media._ID + "=" + id
+                            imagePath = this!!.getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection)!!
+                        } else if ("com.android.providers.downloads.documents" == uri.authority) {
+                            var contentUri = ContentUris.withAppendedId(Uri.parse("content://download/public_downloads"), docId.toLong())
+                            imagePath = this!!.getImagePath(contentUri, null.toString())!!
+                        }
+                    } else if ("content" == uri.scheme) {
+                        //如果是content类型的Uri,则使用普通的方式处理
+                        imagePath = this!!.getImagePath(uri, null.toString())!!
+                    } else if ("file" == uri.scheme) {
+                        //如果是file类型的Uri，则直接获取图片路径即可
+                        imagePath = uri.path
+                    }
+                    if (imagePath != null) {
+                        uploadPhoto = BitmapFactory.decodeFile(imagePath)
+                        ivPhoto.setImageBitmap(uploadPhoto)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getImagePath(uri: Uri, selection: String): String? {
+        var path: String? = null
+        val cursor = contentResolver.query(uri, null, selection, null, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
+            }
+            cursor.close()
+        }
+        return path
+    }
+
 
     private lateinit var assignment: AssignmentTemplate
     private lateinit var adSp1: ArrayAdapter<Special1Template>
@@ -190,21 +263,6 @@ class CollectionActivity : AppCompatActivity() {
         spSpecial3.onItemSelectedListener = Sp3SelectedListener()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            0 -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    uploadPhoto = BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri))
-                    ivPhoto.setImageBitmap(uploadPhoto)
-                }
-            }
-            1 -> {
-                if (resultCode == Activity.RESULT_OK && data != null)
-                    photoUri = data.getParcelableExtra("data")
-                //ivPhoto.setImageBitmap(data.getParcelableExtra("data"))
-            }
-        }
-    }
 
     internal inner class Sp1SelectedListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

@@ -39,19 +39,19 @@ class CollectionListActivity : AppCompatActivity() {
                     1 -> {
                         if (adapter1.count > 0) {
                             adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 }.sortedBy { it.DistrictName })
-                            listView1.adapter = adapter0
+                            listView1.adapter = adapter1
                         }
                     }
                     2 -> {
                         if (adapter2.count > 0) {
                             adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 }.sortedBy { it.DistrictName })
-                            listView2.adapter = adapter0
+                            listView2.adapter = adapter2
                         }
                     }
                     3 -> {
                         if (adapter3.count > 0) {
                             adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 }.sortedBy { it.DistrictName })
-                            listView3.adapter = adapter0
+                            listView3.adapter = adapter3
                         }
                     }
                 }
@@ -68,19 +68,19 @@ class CollectionListActivity : AppCompatActivity() {
                     1 -> {
                         if (adapter1.count > 0) {
                             adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 }.sortedBy { it.AssignmentDate })
-                            listView1.adapter = adapter0
+                            listView1.adapter = adapter1
                         }
                     }
                     2 -> {
                         if (adapter2.count > 0) {
                             adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 }.sortedBy { it.AssignmentDate })
-                            listView2.adapter = adapter0
+                            listView2.adapter = adapter2
                         }
                     }
                     3 -> {
                         if (adapter3.count > 0) {
                             adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 }.sortedBy { it.AssignmentDate })
-                            listView3.adapter = adapter0
+                            listView3.adapter = adapter3
                         }
                     }
 
