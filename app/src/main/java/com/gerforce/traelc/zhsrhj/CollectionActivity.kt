@@ -34,6 +34,11 @@ class CollectionActivity : AppCompatActivity() {
                 this.finish()
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_album -> {
+                var intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                intent.type = "image/*"
+                startActivityForResult(intent, 1)
+            }
             R.id.navigation_upload -> {
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -131,7 +136,6 @@ class CollectionActivity : AppCompatActivity() {
 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-
         if (requestCode == 0) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 photograph()
@@ -151,7 +155,6 @@ class CollectionActivity : AppCompatActivity() {
     }
 
     private lateinit var assignment: AssignmentTemplate
-
     private lateinit var adSp1: ArrayAdapter<Special1Template>
     private lateinit var adSp2: ArrayAdapter<Special2Template>
     private lateinit var adSp3: ArrayAdapter<Special3Template>
@@ -188,9 +191,18 @@ class CollectionActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
-            uploadPhoto = BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri))
-            ivPhoto.setImageBitmap(uploadPhoto)
+        when (requestCode) {
+            0 -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    uploadPhoto = BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri))
+                    ivPhoto.setImageBitmap(uploadPhoto)
+                }
+            }
+            1 -> {
+                if (resultCode == Activity.RESULT_OK && data != null)
+                    photoUri = data.getParcelableExtra("data")
+                //ivPhoto.setImageBitmap(data.getParcelableExtra("data"))
+            }
         }
     }
 

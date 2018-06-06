@@ -9,15 +9,17 @@
     <string name="main_button_collection">定点采集</string>
     <string name="main_title">功能选择</string>
 
-
     <string name="collection_list_title">采集列表</string>
     <string name="collection_list_button_refresh">刷新</string>
     <string name="collection_list_button_detail">详细</string>
     <string name="collection_list_button_back">返回</string>
+    <string name="collection_list_button_road">道路排序</string>
+    <string name="collection_list_button_time">时间排序</string>
 
     <string name="collection_title">信息采集</string>
     <string name="collection_button_send">发送</string>
-    <string name="collection_button_upload">上传照片</string>
+    <string name="collection_button_album">相册</string>
+    <string name="collection_button_upload">拍照</string>
     <string name="collection_button_back">返回</string>
 
 

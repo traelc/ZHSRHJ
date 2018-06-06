@@ -3,17 +3,24 @@
 
     <item
         android:id="@+id/navigation_return"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
         android:title="@string/collection_list_button_back" />
-
+    <item
+        android:id="@+id/navigation_road"
+        android:icon="@drawable/ic_streetview_black_24dp"
+        android:title="@string/collection_list_button_road" />
+    <item
+        android:id="@+id/navigation_time"
+        android:icon="@drawable/ic_access_time_black_24dp"
+        android:title="@string/collection_list_button_time" />
     <item
         android:id="@+id/navigation_refresh"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_replay_black_24dp"
         android:title="@string/collection_list_button_refresh" />
 
     <item
         android:id="@+id/navigation_detail"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_arrow_forward_black_24dp"
         android:title="@string/collection_list_button_detail" />
 
 </menu>

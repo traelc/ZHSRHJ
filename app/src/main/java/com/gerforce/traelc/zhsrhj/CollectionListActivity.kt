@@ -1,9 +1,7 @@
 package com.gerforce.traelc.zhsrhj
 
-import android.app.Activity
+
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.PagerAdapter
@@ -11,11 +9,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_collection_list.*
 import android.view.ViewGroup
-
 import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_collection.*
 import org.jetbrains.anko.*
 import java.net.URL
 
@@ -32,32 +28,91 @@ class CollectionListActivity : AppCompatActivity() {
                 refresh()
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_road -> {
+                when (tlMain.selectedTabPosition) {
+                    0 -> {
+                        if (adapter0.count > 0) {
+                            adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 }.sortedBy { it.DistrictName })
+                            listView0.adapter = adapter0
+                        }
+                    }
+                    1 -> {
+                        if (adapter1.count > 0) {
+                            adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 }.sortedBy { it.DistrictName })
+                            listView1.adapter = adapter0
+                        }
+                    }
+                    2 -> {
+                        if (adapter2.count > 0) {
+                            adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 }.sortedBy { it.DistrictName })
+                            listView2.adapter = adapter0
+                        }
+                    }
+                    3 -> {
+                        if (adapter3.count > 0) {
+                            adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 }.sortedBy { it.DistrictName })
+                            listView3.adapter = adapter0
+                        }
+                    }
+                }
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_time -> {
+                when (tlMain.selectedTabPosition) {
+                    0 -> {
+                        if (adapter0.count > 0) {
+                            adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 }.sortedBy { it.AssignmentDate })
+                            listView0.adapter = adapter0
+                        }
+                    }
+                    1 -> {
+                        if (adapter1.count > 0) {
+                            adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 }.sortedBy { it.AssignmentDate })
+                            listView1.adapter = adapter0
+                        }
+                    }
+                    2 -> {
+                        if (adapter2.count > 0) {
+                            adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 }.sortedBy { it.AssignmentDate })
+                            listView2.adapter = adapter0
+                        }
+                    }
+                    3 -> {
+                        if (adapter3.count > 0) {
+                            adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 }.sortedBy { it.AssignmentDate })
+                            listView3.adapter = adapter0
+                        }
+                    }
+
+                }
+                return@OnNavigationItemSelectedListener true
+            }
             R.id.navigation_detail -> {
                 when (tlMain.selectedTabPosition) {
                     0 -> {
                         if (sel0 != -1) {
-                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter0.getItem(sel0) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0, "selectedItem" to adapter0.getItem(sel0) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
                     }
                     1 -> {
                         if (sel1 != -1) {
-                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter1.getItem(sel1) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0, "selectedItem" to adapter1.getItem(sel1) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
                     }
                     2 -> {
                         if (sel2 != -1) {
-                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter2.getItem(sel2) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0, "selectedItem" to adapter2.getItem(sel2) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
                     }
                     3 -> {
                         if (sel3 != -1) {
-                            startActivityForResult<CollectionActivity>(0,"selectedItem" to adapter3.getItem(sel3) as AssignmentTemplate)
+                            startActivityForResult<CollectionActivity>(0, "selectedItem" to adapter3.getItem(sel3) as AssignmentTemplate)
                         } else {
                             alert("请选择对应记录！") {}.show()
                         }
@@ -161,9 +216,11 @@ class CollectionListActivity : AppCompatActivity() {
         refresh()
     }
 
+    lateinit var data: List<AssignmentTemplate>
+
     private fun refresh() {
         doAsync {
-            val data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Android?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
+            data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Android?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
             adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
             adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
             adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })

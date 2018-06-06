@@ -3,17 +3,18 @@
 
     <item
         android:id="@+id/navigation_back"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_reply_black_24dp"
         android:title="@string/collection_button_back" />
-
+    <item
+        android:id="@+id/navigation_album"
+        android:icon="@drawable/ic_image_black_24dp"
+        android:title="@string/collection_button_album" />
     <item
         android:id="@+id/navigation_upload"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_photo_camera_black_24dp"
         android:title="@string/collection_button_upload" />
-
     <item
         android:id="@+id/navigation_send"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_check_box_black_24dp"
         android:title="@string/collection_button_send" />
-
 </menu>
