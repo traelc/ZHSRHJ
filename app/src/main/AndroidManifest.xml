@@ -3,7 +3,7 @@
     package="com.gerforce.traelc.zhsrhj">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Util"
@@ -25,12 +25,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/main_title" />
-        <activity
-            android:name=".CollectionListActivity"
-            android:label="@string/collection_list_title" />
-        <activity
-            android:name=".CollectionActivity"
-            android:label="@string/collection_title"></activity>
+        <activity android:name=".CollectionListActivity" />
+        <activity android:name=".CollectionActivity"/>
     </application>
 
 </manifest>

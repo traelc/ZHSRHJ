@@ -143,7 +143,7 @@ class CollectionListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection_list)
 
-        setSupportActionBar(tbCollectionList)
+
         tbCollectionList.setNavigationOnClickListener {
             finish()
         }
@@ -247,9 +247,9 @@ class CollectionListActivity : AppCompatActivity() {
                 listView1.adapter = adapter1
                 listView2.adapter = adapter2
                 listView3.adapter = adapter3
-            }
-            if (srl != null) {
-                srl.isRefreshing = false
+                if (srl != null) {
+                    srl.isRefreshing = false
+                }
             }
         }
     }

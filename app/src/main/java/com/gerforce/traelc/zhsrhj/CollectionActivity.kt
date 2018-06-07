@@ -76,7 +76,7 @@ class CollectionActivity : AppCompatActivity() {
                                 Count = txtCount.text.toString().toDouble(),
                                 Special3ID = 1,
                                 Problem = txtProblem.text.toString(),
-                                IsFinished = tbFinished.isChecked,
+                                IsFinished = swFinish.isChecked,
                                 PhotoSource = null
                         )
 
@@ -154,7 +154,7 @@ class CollectionActivity : AppCompatActivity() {
     }
 
     private fun visitAlbum() {
-        val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
         startActivityForResult(intent, 1)
     }
@@ -235,14 +235,13 @@ class CollectionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_collection)
         navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
         navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        setSupportActionBar(tbCollection)
+        //setSupportActionBar(tbCollection)
         tbCollection.setNavigationOnClickListener {
             finish()
         }
 
-
         assignment = intent.getParcelableExtra("selectedItem") as AssignmentTemplate
-        title = when (assignment.AssignmentType) {
+        tvTitle.text = when (assignment.AssignmentType) {
             0 -> "地点位置(居住区)"
             1 -> "地点位置(白天)"
             2 -> "地点位置(早上)"
