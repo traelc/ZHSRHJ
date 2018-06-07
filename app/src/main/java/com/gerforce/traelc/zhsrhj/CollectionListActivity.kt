@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.PagerAdapter
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_collection_list.*
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_collection.*
 import org.jetbrains.anko.*
 import java.net.URL
 
@@ -20,14 +22,6 @@ class CollectionListActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_return -> {
-                this.finish()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_refresh -> {
-                refresh()
-                return@OnNavigationItemSelectedListener true
-            }
             R.id.navigation_road -> {
                 when (tlMain.selectedTabPosition) {
                     0 -> {
@@ -149,6 +143,10 @@ class CollectionListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection_list)
 
+        setSupportActionBar(tbCollectionList)
+        tbCollectionList.setNavigationOnClickListener {
+            finish()
+        }
         tlMain.setupWithViewPager(vpDetail)
 
         this.navi_collection_list.selectedItemId = this.navi_collection_list.menu.getItem(2).itemId
@@ -201,6 +199,24 @@ class CollectionListActivity : AppCompatActivity() {
         listView2 = view2.find(R.id.listview)
         listView3 = view3.find(R.id.listview)
 
+        val srl0 = view0.find<SwipeRefreshLayout>(R.id.srl)
+        val srl1 = view1.find<SwipeRefreshLayout>(R.id.srl)
+        val srl2 = view2.find<SwipeRefreshLayout>(R.id.srl)
+        val srl3 = view3.find<SwipeRefreshLayout>(R.id.srl)
+
+        srl0.setOnRefreshListener {
+            refresh(srl0)
+        }
+        srl1.setOnRefreshListener {
+            refresh(srl1)
+        }
+        srl2.setOnRefreshListener {
+            refresh(srl2)
+        }
+        srl3.setOnRefreshListener {
+            refresh(srl3)
+        }
+
         listView0.setOnItemClickListener { parent, view, position, id ->
             sel0 = position
         }
@@ -218,7 +234,7 @@ class CollectionListActivity : AppCompatActivity() {
 
     lateinit var data: List<AssignmentTemplate>
 
-    private fun refresh() {
+    private fun refresh(srl: SwipeRefreshLayout? = null) {
         doAsync {
             data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Android?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
             adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
@@ -231,8 +247,9 @@ class CollectionListActivity : AppCompatActivity() {
                 listView1.adapter = adapter1
                 listView2.adapter = adapter2
                 listView3.adapter = adapter3
-
-
+            }
+            if (srl != null) {
+                srl.isRefreshing = false
             }
         }
     }

@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_back"
-        android:icon="@drawable/ic_reply_black_24dp"
-        android:title="@string/collection_button_back" />
-    <item
         android:id="@+id/navigation_album"
         android:icon="@drawable/ic_image_black_24dp"
         android:title="@string/collection_button_album" />

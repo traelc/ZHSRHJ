@@ -26,17 +26,12 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import android.content.ContentUris
 import android.provider.DocumentsContract
-import org.jetbrains.anko.internals.AnkoInternals.getContext
 
 
 class CollectionActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_back -> {
-                this.finish()
-                return@OnNavigationItemSelectedListener true
-            }
             R.id.navigation_album -> {
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -226,7 +221,6 @@ class CollectionActivity : AppCompatActivity() {
         return path
     }
 
-
     private lateinit var assignment: AssignmentTemplate
     private lateinit var adSp1: ArrayAdapter<Special1Template>
     private lateinit var adSp2: ArrayAdapter<Special2Template>
@@ -239,8 +233,13 @@ class CollectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection)
-
+        navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
         navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        setSupportActionBar(tbCollection)
+        tbCollection.setNavigationOnClickListener {
+            finish()
+        }
+
 
         assignment = intent.getParcelableExtra("selectedItem") as AssignmentTemplate
         title = when (assignment.AssignmentType) {
