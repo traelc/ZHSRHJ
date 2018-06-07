@@ -217,16 +217,16 @@ class CollectionListActivity : AppCompatActivity() {
             refresh(srl3)
         }
 
-        listView0.setOnItemClickListener { parent, view, position, id ->
+        listView0.setOnItemClickListener { _, _, position, _ ->
             sel0 = position
         }
-        listView1.setOnItemClickListener { parent, view, position, id ->
+        listView1.setOnItemClickListener { _, _, position, _ ->
             sel1 = position
         }
-        listView2.setOnItemClickListener { parent, view, position, id ->
+        listView2.setOnItemClickListener { _, _, position, _ ->
             sel2 = position
         }
-        listView3.setOnItemClickListener { parent, view, position, id ->
+        listView3.setOnItemClickListener { _, _, position, _ ->
             sel3 = position
         }
         refresh()

@@ -58,20 +58,20 @@ class CollectionActivity : AppCompatActivity() {
             }
             R.id.navigation_send -> {
                 if (!txtCount.text.toString().matches(Regex("^[0-9]+([.][0-9]+)?$"))) {
-                    alert { "数量不能为空并且必须输入数字或小数，请重新输入！" }
+                    alert("数量不能为空并且必须输入数字或小数，请重新输入！").show()
                     return@OnNavigationItemSelectedListener false
                 }
                 if (txtCount.text.toString() != "0" && uploadPhoto == null) {
-                    alert { "数量不为0时必须上传照片！" }
+                    alert("数量不为0时必须上传照片！").show()
                     return@OnNavigationItemSelectedListener false
                 }
 
 
                 alert("是否发送？") {
                     yesButton {
-                        var progress = indeterminateProgressDialog("发送中")
+                        val progress = indeterminateProgressDialog("发送中")
                         progress.show()
-                        var add = CollectionSubmit(
+                        val add = CollectionSubmit(
                                 AssignmentID = assignment.AssignmentID,
                                 Count = txtCount.text.toString().toDouble(),
                                 Special3ID = 1,
@@ -81,16 +81,16 @@ class CollectionActivity : AppCompatActivity() {
                         )
 
                         if (uploadPhoto != null) {
-                            var width = uploadPhoto!!.width
-                            var height = uploadPhoto!!.height
-                            var matrix = Matrix()
-                            matrix.preScale(0.125.toFloat(), 0.125.toFloat());
-                            var newBM = Bitmap.createBitmap(uploadPhoto, 0, 0, width, height, matrix, false)
+                            val width = uploadPhoto!!.width
+                            val height = uploadPhoto!!.height
+                            val matrix = Matrix()
+                            matrix.preScale(0.125.toFloat(), 0.125.toFloat())
+                            val newBM = Bitmap.createBitmap(uploadPhoto, 0, 0, width, height, matrix, false)
                             if (newBM != uploadPhoto) {
                                 uploadPhoto!!.recycle()
                             }
-                            var buf = ByteBuffer.allocate(newBM!!.byteCount)
-                            newBM!!.copyPixelsToBuffer(buf)
+                            val buf = ByteBuffer.allocate(newBM!!.byteCount)
+                            newBM.copyPixelsToBuffer(buf)
                             val stream = ByteArrayOutputStream()
                             newBM.compress(Bitmap.CompressFormat.JPEG, 100, stream)
                             val b = stream.toByteArray()
@@ -154,7 +154,7 @@ class CollectionActivity : AppCompatActivity() {
     }
 
     private fun visitAlbum() {
-        var intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         startActivityForResult(intent, 1)
     }
@@ -181,22 +181,22 @@ class CollectionActivity : AppCompatActivity() {
             1 -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     var imagePath: String? = null
-                    var uri = data.data;
+                    val uri = data.data
                     if (DocumentsContract.isDocumentUri(this, uri)) {
                         //如果是document类型的uri,则通过document id来处理
-                        var docId = DocumentsContract.getDocumentId(uri)
+                        val docId = DocumentsContract.getDocumentId(uri)
                         if ("com.android.providers.media.documents" == uri.authority) {
-                            var id = docId.split(":")[1]
-                            var selection = MediaStore.Images.Media._ID + "=" + id
-                            imagePath = this!!.getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection)!!
+                            val id = docId.split(":")[1]
+                            val selection = MediaStore.Images.Media._ID + "=" + id
+                            imagePath = this.getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection)!!
                         } else if ("com.android.providers.downloads.documents" == uri.authority) {
-                            var contentUri = ContentUris.withAppendedId(Uri.parse("content://download/public_downloads"), docId.toLong())
-                            imagePath = this!!.getImagePath(contentUri, null.toString())!!
+                            val contentUri = ContentUris.withAppendedId(Uri.parse("content://download/public_downloads"), docId.toLong())
+                            imagePath = this.getImagePath(contentUri, null.toString())!!
                         }
                     } else if ("content" == uri.scheme) {
                         //如果是content类型的Uri,则使用普通的方式处理
-                        imagePath = this!!.getImagePath(uri, null.toString())!!
-                    } else if ("file" == uri.scheme) {
+                        imagePath = this.getImagePath(uri, null.toString())!!
+                    } else if (uri.scheme == "file") {
                         //如果是file类型的Uri，则直接获取图片路径即可
                         imagePath = uri.path
                     }
@@ -294,7 +294,7 @@ class CollectionActivity : AppCompatActivity() {
 
     internal inner class Sp3SelectedListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            var item = adSp3.getItem(position)
+            val item = adSp3.getItem(position)
             txtScore.text = item.score
         }
 
