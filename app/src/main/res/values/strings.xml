@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZHSRHJ</string>
+    <string name="app_name">中环市容环境实效检查考评系统</string>
     <string name="login_title">中环市容环境实效检查考评系统</string>
     <string name="login_button_login">登录</string>
     <string name="login_button_update">更新参数</string>

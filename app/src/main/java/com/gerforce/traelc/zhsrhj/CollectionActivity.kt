@@ -1,7 +1,6 @@
 package com.gerforce.traelc.zhsrhj
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -254,8 +253,7 @@ class CollectionActivity : AppCompatActivity() {
         txtStreet.text = assignment.StreetName
         txtName.text = assignment.Name
 
-        adSp1 = ArrayAdapter(this, android.R.layout.select_dialog_item, Util.inst.special1)
-        adSp1.setDropDownViewResource(android.R.layout.test_list_item)
+        adSp1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Util.inst.special1)
         spSpecial1.adapter = adSp1
 
         spSpecial1.onItemSelectedListener = Sp1SelectedListener()

@@ -37,6 +37,8 @@ class LoginActivity : AppCompatActivity() {
                             var body = response.body()
                             if (body != null) {
                                 Util.inst.user = Gson().fromJson(body.string(), User::class.java)
+                                name = txtName.text.toString()
+                                password = txtPassword.text.toString()
                                 startActivity<MainActivity>()
                             } else {
                                 uiThread { alert("用户名或密码错误！") {}.show() }
@@ -68,13 +70,20 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private var special: String by Preference(this, "special", "")
+    private var name: String by Preference(this, "userName", "")
+    private var password: String by Preference(this, "password", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         navi_login.selectedItemId = navi_login.menu.getItem(1).itemId
         navi_login.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
+        if (!name.isNullOrEmpty()) {
+            txtName.setText(name)
+        }
+        if (!password.isNullOrEmpty()) {
+            txtPassword.setText(password)
+        }
         if (special.isNullOrEmpty()) {
             getSpecial()
         } else {
