@@ -12,55 +12,10 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jetbrains.anko.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
-
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_login -> {
-                if (txtName.text.isNullOrEmpty() || txtName.text.isNullOrEmpty()) {
-                    alert("用户名或密码不能为空！") {}.show()
-                }
-                var progress = indeterminateProgressDialog("登录中")
-                progress.show()
-                doAsync {
-                    try {
-                        val client = OkHttpClient()
-                        val requestBody = FormBody.Builder().add("userName", txtName.text.toString()).add("password", txtPassword.text.toString()).build()
-                        val request = Request.Builder()
-                                .url(Util.inst.interfaceUrl + "User")
-                                .post(requestBody)
-                                .build()
-                        val response = client.newCall(request).execute()
-                        if (response.isSuccessful) {
-                            var body = response.body()
-                            if (body != null) {
-                                Util.inst.user = Gson().fromJson(body.string(), User::class.java)
-                                name = txtName.text.toString()
-                                password = txtPassword.text.toString()
-                                startActivity<MainActivity>()
-                            } else {
-                                uiThread { alert("用户名或密码错误！") {}.show() }
-                            }
-                            response.close()
-                        } else {
-                            uiThread { alert("用户名或密码错误！") {}.show() }
-                        }
-                    } catch (e: Exception) {
-                        uiThread { alert("网络错误！") {}.show() }
-                    } finally {
-                        uiThread { progress.hide() }
-                    }
-                }
-            }
-            R.id.navigation_update -> {
-                getSpecial()
-                alert("更新配置成功！") {}.show()
-            }
-        }
-        true
-    }
 
     private fun getSpecial() {
         doAsync {
@@ -76,8 +31,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        navi_login.selectedItemId = navi_login.menu.getItem(1).itemId
-        navi_login.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
         if (!name.isNullOrEmpty()) {
             txtName.setText(name)
         }
@@ -88,6 +42,43 @@ class LoginActivity : AppCompatActivity() {
             getSpecial()
         } else {
             Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+        }
+
+        btLogin.setOnClickListener {
+            if (txtName.text.isNullOrEmpty() || txtName.text.isNullOrEmpty()) {
+                alert("用户名或密码不能为空！") {}.show()
+            }
+            var progress = indeterminateProgressDialog("登录中")
+            progress.show()
+            doAsync {
+                try {
+                    val client = OkHttpClient()
+                    val requestBody = FormBody.Builder().add("userName", txtName.text.toString()).add("password", txtPassword.text.toString()).build()
+                    val request = Request.Builder()
+                            .url(Util.inst.interfaceUrl + "User")
+                            .post(requestBody)
+                            .build()
+                    val response = client.newCall(request).execute()
+                    if (response.isSuccessful) {
+                        var body = response.body()
+                        if (body != null) {
+                            Util.inst.user = Gson().fromJson(body.string(), User::class.java)
+                            name = txtName.text.toString()
+                            password = txtPassword.text.toString()
+                            startActivity<MainActivity>()
+                        } else {
+                            uiThread { alert("用户名或密码错误！") {}.show() }
+                        }
+                        response.close()
+                    } else {
+                        uiThread { alert("用户名或密码错误！") {}.show() }
+                    }
+                } catch (e: Exception) {
+                    uiThread { alert("网络错误！") {}.show() }
+                } finally {
+                    uiThread { progress.hide() }
+                }
+            }
         }
     }
 }

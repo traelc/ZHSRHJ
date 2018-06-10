@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
         btCollection.setOnClickListener {
             startActivity<CollectionListActivity>()
         }
+
+        btRectification.setOnClickListener{
+            alert { "增改功能暂未启用！" }.show()
+        }
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
