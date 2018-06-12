@@ -32,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        tvVersion.text = this.packageManager.getPackageInfo(this.packageName, 0).versionName
+
         if (!name.isNullOrEmpty()) {
             txtName.setText(name)
         }
