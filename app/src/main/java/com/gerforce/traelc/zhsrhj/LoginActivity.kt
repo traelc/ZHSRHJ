@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                             Util.inst.user = Gson().fromJson(body.string(), User::class.java)
                             name = txtName.text.toString()
                             password = txtPassword.text.toString()
-                            startActivity<MainActivity>()
+                            startActivity<CollectionListActivity>()
                         } else {
                             uiThread { alert("用户名或密码错误！") {}.show() }
                         }
