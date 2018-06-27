@@ -143,10 +143,19 @@ class CollectionListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection_list)
 
-
         tbCollectionList.setNavigationOnClickListener {
             finish()
         }
+        tbCollectionList.inflateMenu(R.menu.toolbar_collection_list)
+        tbCollectionList.setOnMenuItemClickListener {
+            doAsync {
+                special = URL(Util.inst.interfaceUrl + "User").readText()
+                Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+                uiThread { alert("更新配置成功！") {}.show() }
+            }
+            return@setOnMenuItemClickListener true
+        }
+
         tlMain.setupWithViewPager(vpDetail)
 
         this.navi_collection_list.selectedItemId = this.navi_collection_list.menu.getItem(2).itemId
@@ -232,6 +241,7 @@ class CollectionListActivity : AppCompatActivity() {
         refresh()
     }
 
+    private var special: String by Preference(this, "special", "")
     lateinit var data: List<AssignmentTemplate>
 
     private fun refresh(srl: SwipeRefreshLayout? = null) {

@@ -240,6 +240,8 @@ class CollectionActivity : AppCompatActivity() {
             finish()
         }
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         assignment = intent.getParcelableExtra("selectedItem") as AssignmentTemplate
         tvTitle.text = when (assignment.AssignmentType) {
             0 -> "地点位置(居住区)"
