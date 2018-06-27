@@ -11,23 +11,22 @@
 
     <Button
         android:id="@+id/btLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="236dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:background="@color/colorPrimary"
         android:text="登录"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        tools:layout_editor_absoluteX="200dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
         android:id="@+id/tbTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="90dp"
         android:text="@string/login_button_title"
         android:textColor="@color/colorWhite"
@@ -51,10 +50,11 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="190dp"
+        android:layout_height="200dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tbTitle">
@@ -65,8 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
-
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="36dp"
             android:ems="10"
             android:hint="@string/login_text_name"
             android:inputType="textPersonName"
@@ -79,14 +78,15 @@
             android:id="@+id/txtPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:ems="10"
             android:hint="@string/login_text_password"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="@+id/txtName"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/txtName"
-            app:layout_constraintTop_toBottomOf="@+id/txtName" />
+            app:layout_constraintTop_toBottomOf="@+id/txtName"
+            app:met_iconLeft="@drawable/ic_file_download_white_24dp" />
 
     </android.support.constraint.ConstraintLayout>
-
 </android.support.constraint.ConstraintLayout>
