@@ -148,11 +148,15 @@ class CollectionListActivity : AppCompatActivity() {
         }
         tbCollectionList.inflateMenu(R.menu.toolbar_collection_list)
         tbCollectionList.setOnMenuItemClickListener {
-            doAsync {
-                special = URL(Util.inst.interfaceUrl + "User").readText()
-                Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
-                uiThread { alert("更新配置成功！") {}.show() }
-            }
+            alert("是否更新检查配置？") {
+                yesButton {
+                    doAsync {
+                        special = URL(Util.inst.interfaceUrl + "User").readText()
+                        Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+                        uiThread { alert("更新配置成功！") {}.show() }
+                    }
+                }
+            }.show()
             return@setOnMenuItemClickListener true
         }
 
