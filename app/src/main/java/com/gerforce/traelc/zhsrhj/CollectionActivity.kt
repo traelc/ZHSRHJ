@@ -26,6 +26,8 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import android.content.ContentUris
 import android.provider.DocumentsContract
+import android.support.v7.app.ActionBarDrawerToggle
+
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -66,6 +68,7 @@ class CollectionActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener false
                 }
 
+                //main_drawer_layout.openDrawer(main_right_drawer_layout)
 
                 alert("是否发送？") {
                     yesButton {
@@ -230,12 +233,13 @@ class CollectionActivity : AppCompatActivity() {
 
     private lateinit var photoUri: Uri
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collection)
         navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
         navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        //setSupportActionBar(tbCollection)
+
         tbCollection.setNavigationOnClickListener {
             finish()
         }

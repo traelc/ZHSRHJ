@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CollectionActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/tbCollection"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:contentInsetStart="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_navigate_before_white_24dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
-
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -30,277 +28,296 @@
             android:textSize="19sp" />
     </android.support.v7.widget.Toolbar>
 
-
-    <ScrollView
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/main_drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/navi_collection"
-        app:layout_constraintTop_toBottomOf="@+id/tbCollection">
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
 
-        <android.support.constraint.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <TextView
+                    android:id="@+id/tvDistinct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="区域"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvStreet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="街道"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/tvDistinct"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDistinct" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="名称"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/tvStreet"
+                    app:layout_constraintTop_toBottomOf="@+id/tvStreet" />
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="地址"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/tvName"
+                    app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+                <TextView
+                    android:id="@+id/txtDistinct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="48dp"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toEndOf="@+id/tvDistinct"
+                    app:layout_constraintTop_toTopOf="@+id/tvDistinct" />
+
+                <TextView
+                    android:id="@+id/txtStreet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/txtDistinct"
+                    app:layout_constraintTop_toTopOf="@+id/tvStreet" />
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/txtStreet"
+                    app:layout_constraintTop_toTopOf="@+id/tvName" />
+
+                <TextView
+                    android:id="@+id/txtAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/txtName"
+                    app:layout_constraintTop_toTopOf="@+id/tvAddress" />
+
+                <TextView
+                    android:id="@+id/tvSpecial1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="测评项目"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/spSpecial1"
+                    app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                    app:layout_constraintTop_toTopOf="@+id/spSpecial1" />
+
+                <TextView
+                    android:id="@+id/tvSpecial2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="检查项目"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/spSpecial2"
+                    app:layout_constraintStart_toStartOf="@+id/tvSpecial1"
+                    app:layout_constraintTop_toTopOf="@+id/spSpecial2" />
+
+                <TextView
+                    android:id="@+id/tvSpecial3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="检查内容"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/spSpecial3"
+                    app:layout_constraintStart_toStartOf="@+id/tvSpecial2"
+                    app:layout_constraintTop_toTopOf="@+id/spSpecial3" />
+
+                <Spinner
+                    android:id="@+id/spSpecial1"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginTop="21dp"
+                    android:spinnerMode="dialog"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/txtAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
+
+                <Spinner
+                    android:id="@+id/spSpecial2"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="16dp"
+                    android:spinnerMode="dialog"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintEnd_toEndOf="@+id/spSpecial1"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/spSpecial1"
+                    app:layout_constraintTop_toBottomOf="@+id/spSpecial1" />
+
+                <Spinner
+                    android:id="@+id/spSpecial3"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="16dp"
+                    android:spinnerMode="dialog"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintEnd_toEndOf="@+id/spSpecial2"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/spSpecial2"
+                    app:layout_constraintTop_toBottomOf="@+id/spSpecial2" />
+
+                <EditText
+                    android:id="@+id/txtProblem"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="27dp"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="24dp"
+                    android:ems="10"
+                    android:hint="地点描述"
+                    android:inputType="textPersonName"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSpecial3" />
+
+                <TextView
+                    android:id="@+id/tvScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="单位扣分"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/tvSpecial3"
+                    app:layout_constraintTop_toBottomOf="@+id/txtProblem" />
+
+                <TextView
+                    android:id="@+id/txtScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toStartOf="@+id/spSpecial3"
+                    app:layout_constraintTop_toTopOf="@+id/tvScore" />
+
+                <TextView
+                    android:id="@+id/tvCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="数量"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtCount"
+                    app:layout_constraintStart_toStartOf="@+id/tvScore"
+                    app:layout_constraintTop_toTopOf="@+id/txtCount" />
+
+                <EditText
+                    android:id="@+id/txtCount"
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="15dp"
+                    android:ems="10"
+                    android:hint="数量"
+                    android:inputType="numberDecimal"
+                    android:selectAllOnFocus="true"
+                    android:text="0"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintStart_toEndOf="@+id/tvCount"
+                    app:layout_constraintTop_toBottomOf="@+id/tvScore" />
+
+                <ImageView
+                    android:id="@+id/ivPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="500dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="20dp"
+                    android:scaleType="fitStart"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtCount"
+                    app:srcCompat="@mipmap/n1" />
+
+                <Switch
+                    android:id="@+id/swFinish"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:switchMinWidth="60dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCount"
+                    app:layout_constraintEnd_toStartOf="@+id/tvFinish2"
+                    app:layout_constraintTop_toTopOf="@+id/tvCount"
+                    tools:checked="false" />
+
+                <TextView
+                    android:id="@+id/tvFinish1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="未完成"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCount"
+                    app:layout_constraintEnd_toStartOf="@+id/swFinish"
+                    app:layout_constraintTop_toTopOf="@+id/tvCount" />
+
+                <TextView
+                    android:id="@+id/tvFinish2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="完成"
+                    android:textSize="@dimen/text_size"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCount"
+                    app:layout_constraintEnd_toEndOf="@+id/txtProblem"
+                    app:layout_constraintTop_toTopOf="@+id/tvCount" />
+
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/main_right_drawer_layout"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@color/colorPrimary"
+            android:paddingTop="50dp">
 
             <TextView
-                android:id="@+id/tvDistinct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
-                android:text="区域"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_centerInParent="true"
+                android:text="右边菜单测试" />
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvStreet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="街道"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/tvDistinct"
-                app:layout_constraintTop_toBottomOf="@+id/tvDistinct" />
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="名称"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/tvStreet"
-                app:layout_constraintTop_toBottomOf="@+id/tvStreet" />
-
-            <TextView
-                android:id="@+id/tvAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="地址"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/tvName"
-                app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-            <TextView
-                android:id="@+id/txtDistinct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toEndOf="@+id/tvDistinct"
-                app:layout_constraintTop_toTopOf="@+id/tvDistinct" />
-
-            <TextView
-                android:id="@+id/txtStreet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/txtDistinct"
-                app:layout_constraintTop_toTopOf="@+id/tvStreet" />
-
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/txtStreet"
-                app:layout_constraintTop_toTopOf="@+id/tvName" />
-
-            <TextView
-                android:id="@+id/txtAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/txtName"
-                app:layout_constraintTop_toTopOf="@+id/tvAddress" />
-
-            <TextView
-                android:id="@+id/tvSpecial1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:text="测评项目"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/spSpecial1"
-                app:layout_constraintStart_toStartOf="@+id/tvAddress"
-                app:layout_constraintTop_toTopOf="@+id/spSpecial1" />
-
-            <TextView
-                android:id="@+id/tvSpecial2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:text="检查项目"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/spSpecial2"
-                app:layout_constraintStart_toStartOf="@+id/tvSpecial1"
-                app:layout_constraintTop_toTopOf="@+id/spSpecial2" />
-
-            <TextView
-                android:id="@+id/tvSpecial3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:text="检查内容"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/spSpecial3"
-                app:layout_constraintStart_toStartOf="@+id/tvSpecial2"
-                app:layout_constraintTop_toTopOf="@+id/spSpecial3" />
-
-            <Spinner
-                android:id="@+id/spSpecial1"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginTop="21dp"
-                android:spinnerMode="dialog"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/txtAddress"
-                app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
-
-            <Spinner
-                android:id="@+id/spSpecial2"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="16dp"
-                android:spinnerMode="dialog"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintEnd_toEndOf="@+id/spSpecial1"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/spSpecial1"
-                app:layout_constraintTop_toBottomOf="@+id/spSpecial1" />
-
-            <Spinner
-                android:id="@+id/spSpecial3"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="16dp"
-                android:spinnerMode="dialog"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintEnd_toEndOf="@+id/spSpecial2"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/spSpecial2"
-                app:layout_constraintTop_toBottomOf="@+id/spSpecial2" />
-
-            <EditText
-                android:id="@+id/txtProblem"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="27dp"
-                android:layout_marginStart="27dp"
-                android:layout_marginTop="24dp"
-                android:ems="10"
-                android:hint="地点描述"
-                android:inputType="textPersonName"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSpecial3" />
-
-            <TextView
-                android:id="@+id/tvScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="单位扣分"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/tvSpecial3"
-                app:layout_constraintTop_toBottomOf="@+id/txtProblem" />
-
-            <TextView
-                android:id="@+id/txtScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toStartOf="@+id/spSpecial3"
-                app:layout_constraintTop_toTopOf="@+id/tvScore" />
-
-            <TextView
-                android:id="@+id/tvCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:text="数量"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/txtCount"
-                app:layout_constraintStart_toStartOf="@+id/tvScore"
-                app:layout_constraintTop_toTopOf="@+id/txtCount" />
-
-            <EditText
-                android:id="@+id/txtCount"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="15dp"
-                android:ems="10"
-                android:hint="数量"
-                android:inputType="numberDecimal"
-                android:selectAllOnFocus="true"
-                android:text="0"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintStart_toEndOf="@+id/tvCount"
-                app:layout_constraintTop_toBottomOf="@+id/tvScore" />
-
-            <ImageView
-                android:id="@+id/ivPhoto"
-                android:layout_width="0dp"
-                android:layout_height="500dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
-                android:scaleType="fitStart"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtCount"
-                app:srcCompat="@mipmap/n1" />
-
-            <Switch
-                android:id="@+id/swFinish"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:switchMinWidth="60dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvCount"
-                app:layout_constraintEnd_toStartOf="@+id/tvFinish2"
-                app:layout_constraintTop_toTopOf="@+id/tvCount"
-                tools:checked="false" />
-
-            <TextView
-                android:id="@+id/tvFinish1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="未完成"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/tvCount"
-                app:layout_constraintEnd_toStartOf="@+id/swFinish"
-                app:layout_constraintTop_toTopOf="@+id/tvCount" />
-
-            <TextView
-                android:id="@+id/tvFinish2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="完成"
-                android:textSize="@dimen/text_size"
-                app:layout_constraintBottom_toBottomOf="@+id/tvCount"
-                app:layout_constraintEnd_toEndOf="@+id/txtProblem"
-                app:layout_constraintTop_toTopOf="@+id/tvCount" />
-
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
-
+    </android.support.v4.widget.DrawerLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navi_collection"
@@ -313,4 +330,4 @@
         app:menu="@menu/navigation_collection" />
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
