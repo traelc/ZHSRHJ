@@ -89,16 +89,15 @@ class CollectionActivity : AppCompatActivity() {
                             val matrix = Matrix()
                             matrix.preScale(0.125.toFloat(), 0.125.toFloat())
                             val newBM = Bitmap.createBitmap(uploadPhoto, 0, 0, width, height, matrix, false)
-                            if (newBM != uploadPhoto) {
+                            /*if (newBM != uploadPhoto) {
                                 uploadPhoto!!.recycle()
-                            }
+                            }*/
                             val buf = ByteBuffer.allocate(newBM!!.byteCount)
                             newBM.copyPixelsToBuffer(buf)
                             val stream = ByteArrayOutputStream()
                             newBM.compress(Bitmap.CompressFormat.JPEG, 100, stream)
                             val b = stream.toByteArray()
                             add.PhotoSource = Base64Coder.encodeLines(b)
-
                         }
                         doAsync {
                             try {
@@ -115,6 +114,7 @@ class CollectionActivity : AppCompatActivity() {
                                         finish()
                                     } else {
                                         uiThread {
+                                            alert("发送成功！").show()
                                             txtDistinctPrevious.text = txtDistinct.text
                                             txtStreetPrevious.text = txtStreet.text
                                             txtNamePrevious.text = txtName.text
@@ -126,19 +126,17 @@ class CollectionActivity : AppCompatActivity() {
                                             txtScorePrevious.text = txtScore.text
                                             txtCountPrevious.text = txtCount.text
                                             ivPhotoPrevious.setImageBitmap(uploadPhoto)
-                                            alert("发送成功！") {}.show()
                                             txtCount.setText("0")
                                             ivPhoto.setImageResource(R.mipmap.n1)
                                             uploadPhoto = null
                                         }
-
                                     }
                                     response.close()
                                 } else {
-                                    uiThread { alert("发送失败！") {}.show() }
+                                    uiThread { alert("发送失败！").show() }
                                 }
                             } catch (e: Exception) {
-                                uiThread { alert("网络错误！") {}.show() }
+                                uiThread { alert("网络错误！").show() }
                             } finally {
                                 uiThread { progress.hide() }
                             }
@@ -251,18 +249,6 @@ class CollectionActivity : AppCompatActivity() {
         navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
         navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        tbCollection.inflateMenu(R.menu.toolbar_collection)
-        val mDrawerToggle = object : ActionBarDrawerToggle(this, main_drawer_layout, tbCollection, 0, 0) {
-            override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-                when (item!!.itemId) {
-                    R.id.toolbar_previous -> super.onOptionsItemSelected(item)
-                    else -> {
-                    }
-                }
-                return true
-            }
-        }
-        mDrawerToggle.syncState()
         tbCollection.setNavigationOnClickListener {
             finish()
         }

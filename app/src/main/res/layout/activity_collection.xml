@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -12,6 +12,7 @@
         android:id="@+id/tbCollection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:contentInsetStart="0dp"
@@ -32,12 +33,15 @@
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/main_drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navi_collection"
+        android:layout_below="@id/tbCollection"
+        android:layout_centerInParent="true"
         android:background="@android:color/transparent">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fillViewport="true">
 
             <android.support.constraint.ConstraintLayout
@@ -311,92 +315,242 @@
             android:layout_gravity="end"
             android:fillViewport="true">
 
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:background="@color/colorPrimary">
 
-                <TextView
-                    android:id="@+id/txtDistinctPrevious"
-                    android:layout_width="wrap_content"
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/txtStreetPrevious"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="区域"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/txtDistinctPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/txtNamePrevious"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="街道"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/txtStreetPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/txtAddressPrevious"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="名称"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/txtNamePrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/spSpecial1Previous"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="地址"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/txtAddressPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/spSpecial2Previous"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="测评项目"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/spSpecial1Previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/spSpecial3Previous"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="检查项目"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/spSpecial2Previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/txtProblemPrevious"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="检查内容"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/spSpecial3Previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/txtScorePrevious"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="地点描述"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/txtProblemPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/txtCountPrevious"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="单位扣分"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/txtScorePrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size" />
+                    android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/ivPhotoPrevious"
-                    android:layout_width="wrap_content"
-                    android:layout_height="500dp"
-                    android:scaleType="fitStart" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:width="100dp"
+                        android:text="数量"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/txtCountPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/ivPhotoPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="500dp"
+                        android:layout_span="2"
+                        android:scaleType="fitStart" />
+                </TableRow>
+            </TableLayout>
         </ScrollView>
     </android.support.v4.widget.DrawerLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navi_collection"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/navigation_collection" />
-
-
-</LinearLayout>
+</RelativeLayout>
