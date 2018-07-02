@@ -29,7 +29,6 @@ import android.provider.DocumentsContract
 import android.support.v7.app.ActionBarDrawerToggle
 
 
-
 class CollectionActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -114,12 +113,23 @@ class CollectionActivity : AppCompatActivity() {
                                         setResult(100, intent)
                                         finish()
                                     } else {
-                                        uploadPhoto = null
                                         uiThread {
+                                            txtDistinctPrevious.text = txtDistinct.text
+                                            txtStreetPrevious.text = txtStreet.text
+                                            txtNamePrevious.text = txtName.text
+                                            txtAddressPrevious.text = txtAddress.text
+                                            spSpecial1Previous.text = spSpecial1.selectedItem.toString()
+                                            spSpecial2Previous.text = spSpecial2.selectedItem.toString()
+                                            spSpecial3Previous.text = spSpecial3.selectedItem.toString()
+                                            txtProblemPrevious.text = txtProblem.text
+                                            txtScorePrevious.text = txtScore.text
+                                            txtCountPrevious.text = txtCount.text
+                                            ivPhotoPrevious.setImageBitmap(uploadPhoto)
                                             alert("发送成功！") {}.show()
                                             txtCount.setText("0")
                                             ivPhoto.setImageResource(R.mipmap.n1)
                                         }
+                                        uploadPhoto = null
                                     }
                                     response.close()
                                 } else {

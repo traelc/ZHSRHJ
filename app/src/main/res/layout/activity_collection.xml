@@ -17,6 +17,7 @@
         app:contentInsetStart="0dp"
         app:navigationIcon="@drawable/ic_navigate_before_white_24dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
+
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -302,21 +304,88 @@
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
 
-        <RelativeLayout
+        <ScrollView
             android:id="@+id/main_right_drawer_layout"
-            android:layout_width="240dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:background="@color/colorPrimary"
-            android:paddingTop="50dp">
+            android:fillViewport="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="右边菜单测试" />
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:padding="10dp">
 
+                <TextView
+                    android:id="@+id/txtDistinctPrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/txtStreetPrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/txtNamePrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/txtAddressPrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/spSpecial1Previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/spSpecial2Previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/spSpecial3Previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/txtProblemPrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/txtScorePrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <TextView
+                    android:id="@+id/txtCountPrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size" />
+
+                <ImageView
+                    android:id="@+id/ivPhotoPrevious"
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"
+                    android:scaleType="fitStart" />
+
+            </LinearLayout>
+        </ScrollView>
     </android.support.v4.widget.DrawerLayout>
 
     <android.support.design.widget.BottomNavigationView
