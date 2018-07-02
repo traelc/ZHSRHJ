@@ -111,6 +111,7 @@ class CollectionActivity : AppCompatActivity() {
                                 if (response.isSuccessful) {
                                     if (add.IsFinished) {
                                         setResult(100, intent)
+                                        progress.dismiss()
                                         finish()
                                     } else {
                                         uiThread {
@@ -248,6 +249,16 @@ class CollectionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_collection)
         navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
         navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        tbCollection.inflateMenu(R.menu.toolbar_collection)
+        tbCollection.setOnMenuItemClickListener {
+            if (main_drawer_layout.isDrawerOpen(main_right_drawer_layout)) {
+                main_drawer_layout.closeDrawer(main_right_drawer_layout)
+            } else {
+                main_drawer_layout.openDrawer(main_right_drawer_layout)
+            }
+            return@setOnMenuItemClickListener true
+        }
 
         tbCollection.setNavigationOnClickListener {
             finish()
