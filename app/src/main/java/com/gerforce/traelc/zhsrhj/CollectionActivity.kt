@@ -128,8 +128,9 @@ class CollectionActivity : AppCompatActivity() {
                                             alert("发送成功！") {}.show()
                                             txtCount.setText("0")
                                             ivPhoto.setImageResource(R.mipmap.n1)
+                                            uploadPhoto = null
                                         }
-                                        uploadPhoto = null
+
                                     }
                                     response.close()
                                 } else {
