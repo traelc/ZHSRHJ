@@ -27,6 +27,7 @@ import java.nio.ByteBuffer
 import android.content.ContentUris
 import android.provider.DocumentsContract
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.MenuItem
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -175,8 +176,7 @@ class CollectionActivity : AppCompatActivity() {
 
     private fun photograph() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val timeStampFormat = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss")
-        val filename = timeStampFormat.format(Date())
+        val filename = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date())
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, filename)
         photoUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
@@ -251,6 +251,18 @@ class CollectionActivity : AppCompatActivity() {
         navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
         navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        tbCollection.inflateMenu(R.menu.toolbar_collection)
+        val mDrawerToggle = object : ActionBarDrawerToggle(this, main_drawer_layout, tbCollection, 0, 0) {
+            override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+                when (item!!.itemId) {
+                    R.id.toolbar_previous -> super.onOptionsItemSelected(item)
+                    else -> {
+                    }
+                }
+                return true
+            }
+        }
+        mDrawerToggle.syncState()
         tbCollection.setNavigationOnClickListener {
             finish()
         }
