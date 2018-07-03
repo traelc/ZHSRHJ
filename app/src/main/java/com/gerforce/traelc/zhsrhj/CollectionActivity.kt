@@ -25,9 +25,8 @@ import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import android.content.ContentUris
+import android.media.ExifInterface
 import android.provider.DocumentsContract
-import android.support.v7.app.ActionBarDrawerToggle
-import android.view.MenuItem
 
 
 class CollectionActivity : AppCompatActivity() {
@@ -188,9 +187,11 @@ class CollectionActivity : AppCompatActivity() {
             0 -> {
                 if (resultCode == Activity.RESULT_OK) {
                     uploadPhoto = BitmapFactory.decodeStream(contentResolver.openInputStream(photoUri))
+                    uploadPhoto = toTurn(uploadPhoto!!, getPath(photoUri))
                     ivPhoto.setImageBitmap(uploadPhoto)
                 }
             }
+
             1 -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     var imagePath: String? = null
@@ -220,6 +221,37 @@ class CollectionActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getPath(uri: Uri): String {
+        val projection = arrayOf(MediaStore.Video.Media.DATA)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+        val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+        cursor.moveToFirst()
+        return cursor.getString(columnIndex)
+    }
+
+    private fun readPictureDegree(path: String): Int {
+        var degree: Int
+        var exifInterface = ExifInterface(path)
+        var orientation: Int = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        degree = when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> 90
+            ExifInterface.ORIENTATION_ROTATE_180 -> 180
+            ExifInterface.ORIENTATION_ROTATE_270 -> 270
+            else -> 0
+        }
+        return degree
+    }
+
+    private fun toTurn(img: Bitmap, path: String): Bitmap {
+        var img = img
+        val matrix = Matrix()
+        matrix.postRotate(readPictureDegree(path).toFloat())
+        val width = img.width
+        val height = img.height
+        img = Bitmap.createBitmap(img, 0, 0, width, height, matrix, true)
+        return img
     }
 
     private fun getImagePath(uri: Uri, selection: String): String? {
