@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import android.content.ContentUris
 import android.media.ExifInterface
+import android.os.Build
 import android.provider.DocumentsContract
 
 
@@ -34,7 +35,7 @@ class CollectionActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_album -> {
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         visitAlbum()
                     } else {
@@ -46,7 +47,7 @@ class CollectionActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_upload -> {
-                if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         photograph()
                     } else {
@@ -174,7 +175,7 @@ class CollectionActivity : AppCompatActivity() {
 
     private fun photograph() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val filename = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date())
+        val filename = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CHINA).format(Date())
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, filename)
         photoUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
@@ -309,7 +310,7 @@ class CollectionActivity : AppCompatActivity() {
         txtStreet.text = assignment.StreetName
         txtName.text = assignment.Name
 
-        adSp1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Util.inst.special1)
+        adSp1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Util.inst.special1.filter { it.mode == assignment.Mode.toByte() })
         spSpecial1.adapter = adSp1
 
         spSpecial1.onItemSelectedListener = Sp1SelectedListener()
