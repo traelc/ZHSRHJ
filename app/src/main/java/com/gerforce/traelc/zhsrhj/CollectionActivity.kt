@@ -77,7 +77,7 @@ class CollectionActivity : AppCompatActivity() {
                         val add = CollectionSubmit(
                                 AssignmentID = assignment.AssignmentID,
                                 Count = txtCount.text.toString().toDouble(),
-                                Special3ID = 1,
+                                Special3ID = (spSpecial3.selectedItem as Special3Template).id,
                                 Problem = txtProblem.text.toString(),
                                 IsFinished = swFinish.isChecked,
                                 PhotoSource = null
