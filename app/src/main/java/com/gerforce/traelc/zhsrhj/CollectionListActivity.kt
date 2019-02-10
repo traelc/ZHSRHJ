@@ -156,7 +156,7 @@ class CollectionListActivity : AppCompatActivity() {
                         uiThread { alert("更新配置成功！") {}.show() }
                     }
                 }
-                noButton {  }
+                noButton { }
             }.show()
             return@setOnMenuItemClickListener true
         }
@@ -247,7 +247,7 @@ class CollectionListActivity : AppCompatActivity() {
     }
 
     private var special: String by Preference(this, "special", "")
-    lateinit var data: List<AssignmentTemplate>
+    private lateinit var data: List<AssignmentTemplate>
 
     private fun refresh(srl: SwipeRefreshLayout? = null) {
         doAsync {

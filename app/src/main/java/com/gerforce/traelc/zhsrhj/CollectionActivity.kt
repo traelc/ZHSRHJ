@@ -310,7 +310,7 @@ class CollectionActivity : AppCompatActivity() {
         txtStreet.text = assignment.StreetName
         txtName.text = assignment.Name
 
-        adSp1 = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, Util.inst.special1.filter { it.mode == assignment.Mode.toByte() })
+        adSp1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, Util.inst.special1.filter { it.mode == assignment.Mode.toByte() && it.sp0id == assignment.Sp0id })
         spSpecial1.adapter = adSp1
 
         spSpecial1.onItemSelectedListener = Sp1SelectedListener()
@@ -323,13 +323,13 @@ class CollectionActivity : AppCompatActivity() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             if (assignment.Mode == 0) {
                 when (assignment.AssignmentType) {
-                    0 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template)
-                    1 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.day == true } })
-                    2 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.morning == true } })
-                    3 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.night == true } })
+                    0 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template)
+                    1 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.day == true } })
+                    2 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.morning == true } })
+                    3 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.night == true } })
                 }
             } else {
-                adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp1.getItem(position).Special2Template)
+                adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template)
             }
             spSpecial2.adapter = adSp2
         }
@@ -340,7 +340,7 @@ class CollectionActivity : AppCompatActivity() {
 
     internal inner class Sp2SelectedListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            adSp3 = ArrayAdapter(baseContext, android.R.layout.simple_spinner_dropdown_item, adSp2.getItem(position).Special3Template)
+            adSp3 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp2.getItem(position).Special3Template)
             spSpecial3.adapter = adSp3
         }
 

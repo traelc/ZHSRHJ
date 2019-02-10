@@ -5,7 +5,14 @@ import android.os.Parcelable
 
 
 data class User(var UserID: Int, var LoginName: String, var UserName: String)
-data class Special1Template(var id: Int, var name: String, var mode: Byte, var Special2Template: List<Special2Template>) {
+
+data class Special0Template(var id: Int, var name: String, var Special1Template: List<Special1Template>) {
+    override fun toString(): String {
+        return name
+    }
+}
+
+data class Special1Template(var id: Int, var name: String, var mode: Byte, var sp0id: Int, var Special2Template: List<Special2Template>) {
     override fun toString(): String {
         return name
     }
@@ -28,7 +35,7 @@ data class CollectionSubmit(var Problem: String?, var Count: Double, var PhotoSo
 data class AssignmentTemplate(var AssignmentID: Int, var UserID: Int, var Mode: Int, var QuarterID: Int?, var RoadID: Int?, var IsFinished: Boolean, var CreateDate: String,
                               var AssignmentDate: String, var StreetName: String, var DistrictName: String, var Longitude: Double, var Latitude: Double, var ModeName: String,
                               var Distance: String, var DistanceSort: Double?, var Name: String, var Address: String, var IsMarket: Boolean, var IsRail: Boolean,
-                              var IsHospital: Boolean, var IsSchool: Boolean, var IsSurrounding: Boolean, var AssignmentType: Int) : Parcelable {
+                              var IsHospital: Boolean, var IsSchool: Boolean, var IsSurrounding: Boolean, var AssignmentType: Int, var Sp0id: Int) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readInt(),
@@ -52,8 +59,7 @@ data class AssignmentTemplate(var AssignmentID: Int, var UserID: Int, var Mode: 
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
-            parcel.readInt()) {
-    }
+            parcel.readInt(), parcel.readInt())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(AssignmentID)
@@ -79,6 +85,7 @@ data class AssignmentTemplate(var AssignmentID: Int, var UserID: Int, var Mode: 
         parcel.writeByte(if (IsSchool) 1 else 0)
         parcel.writeByte(if (IsSurrounding) 1 else 0)
         parcel.writeInt(AssignmentType)
+        parcel.writeInt(Sp0id)
     }
 
     override fun describeContents(): Int {

@@ -34,17 +34,17 @@ class LoginActivity : AppCompatActivity() {
 
         tvVersion.text = this.packageManager.getPackageInfo(this.packageName, 0).versionName
 
-        if (!name.isNullOrEmpty()) {
+        if (!name.isEmpty()) {
             txtName.setText(name)
         }
-        if (!password.isNullOrEmpty()) {
+        if (!password.isEmpty()) {
             txtPassword.setText(password)
         }
-        if (special.isNullOrEmpty()) {
-            getSpecial()
-        } else {
-            Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
-        }
+        //if (special.isEmpty()) {
+        getSpecial()
+        //} else {
+        //    Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+        //}
 
         btLogin.setOnClickListener {
             if (txtName.text.isNullOrEmpty() || txtName.text.isNullOrEmpty()) {
