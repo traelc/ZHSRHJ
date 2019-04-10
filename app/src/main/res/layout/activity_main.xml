@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/ic_browser" />
 
     <ImageButton
-        android:id="@+id/btRectification"
+        android:id="@+id/btShop"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="60dp"
@@ -65,10 +65,10 @@
         android:id="@+id/tvCollection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="采集"
+        android:layout_marginEnd="8dp"
+        android:text="小区街道"
         app:layout_constraintEnd_toEndOf="@+id/btCollection"
         app:layout_constraintStart_toStartOf="@+id/btCollection"
         app:layout_constraintTop_toBottomOf="@+id/btCollection" />
@@ -80,9 +80,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="整改"
-        app:layout_constraintEnd_toEndOf="@+id/btRectification"
-        app:layout_constraintStart_toStartOf="@+id/btRectification"
-        app:layout_constraintTop_toBottomOf="@+id/btRectification" />
+        android:text="商铺"
+        app:layout_constraintEnd_toEndOf="@+id/btShop"
+        app:layout_constraintStart_toStartOf="@+id/btShop"
+        app:layout_constraintTop_toBottomOf="@+id/btShop" />
 
 </android.support.constraint.ConstraintLayout>

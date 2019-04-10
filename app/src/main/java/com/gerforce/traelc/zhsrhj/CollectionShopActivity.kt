@@ -2,35 +2,70 @@ package com.gerforce.traelc.zhsrhj
 
 import android.Manifest
 import android.app.Activity
-import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
+import android.content.ContentUris
+import android.content.ContentValues
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.provider.DocumentsContract
+import android.provider.MediaStore
+import android.support.design.widget.BottomNavigationView
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import kotlinx.android.synthetic.main.activity_collection.*
-import android.provider.MediaStore
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.content.ContentValues
-import java.text.SimpleDateFormat
-import java.util.*
-import android.content.pm.PackageManager
-import android.graphics.Matrix
 import com.google.gson.Gson
-import okhttp3.*
+import kotlinx.android.synthetic.main.activity_collection_shop.*
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
-import android.content.ContentUris
-import android.media.ExifInterface
-import android.os.Build
-import android.provider.DocumentsContract
+import java.text.SimpleDateFormat
+import java.util.*
+
+class CollectionShopActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_collection_shop)
+
+        navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
+        navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        tbCollection.inflateMenu(R.menu.toolbar_collection)
+        tbCollection.setOnMenuItemClickListener {
+            if (main_drawer_layout.isDrawerOpen(main_right_drawer_layout)) {
+                main_drawer_layout.closeDrawer(main_right_drawer_layout)
+            } else {
+                main_drawer_layout.openDrawer(main_right_drawer_layout)
+            }
+            return@setOnMenuItemClickListener true
+        }
+
+        tbCollection.setNavigationOnClickListener {
+            finish()
+        }
+
+        adSp1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, Util.inst.special1.filter { it.mode.toInt() == 2 })
+        spSpecial1.adapter = adSp1
+        spSpecial1.onItemSelectedListener = Sp1SelectedListener()
+        spSpecial2.onItemSelectedListener = Sp2SelectedListener()
+        spSpecial3.onItemSelectedListener = Sp3SelectedListener()
+
+        adDistinct = ArrayAdapter(this, android.R.layout.simple_list_item_1, Util.inst.distinct)
+        spDistinct.adapter = adDistinct
 
 
-class CollectionActivity : AppCompatActivity() {
+    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -74,12 +109,12 @@ class CollectionActivity : AppCompatActivity() {
                     yesButton {
                         val progress = indeterminateProgressDialog("发送中")
                         progress.show()
-                        val add = CollectionSubmit(
-                                AssignmentID = assignment.AssignmentID,
+                        val add = CollectionShopSubmit(
+                                StreetID = (spStreet.selectedItem as StreetTemplate).StreetID,
                                 Count = txtCount.text.toString().toDouble(),
                                 Special3ID = (spSpecial3.selectedItem as Special3Template).id,
-                                Problem = txtMemo.text.toString(),
-                                IsFinished = swFinish.isChecked,
+                                Memo = txtMemo.text.toString(),
+                                ShopSN = txtShopSN.text.toString(),
                                 PhotoSource = null
                         )
 
@@ -104,33 +139,27 @@ class CollectionActivity : AppCompatActivity() {
                                 val client = OkHttpClient()
                                 val requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), Gson().toJson(add))
                                 val request = Request.Builder()
-                                        .url(Util.inst.interfaceUrl + "Android")
+                                        .url(Util.inst.interfaceUrl + "Shop")
                                         .post(requestBody)
                                         .build()
                                 val response = client.newCall(request).execute()
                                 if (response.isSuccessful) {
-                                    if (add.IsFinished) {
-                                        setResult(100, intent)
-                                        progress.dismiss()
-                                        finish()
-                                    } else {
-                                        uiThread {
-                                            alert("发送成功！").show()
-                                            txtDistinctPrevious.text = txtDistinct.text
-                                            txtStreetPrevious.text = txtStreet.text
-                                            txtNamePrevious.text = txtName.text
-                                            txtAddressPrevious.text = txtAddress.text
-                                            spSpecial1Previous.text = spSpecial1.selectedItem.toString()
-                                            spSpecial2Previous.text = spSpecial2.selectedItem.toString()
-                                            spSpecial3Previous.text = spSpecial3.selectedItem.toString()
-                                            txtProblemPrevious.text = txtMemo.text
-                                            txtScorePrevious.text = txtScore.text
-                                            txtCountPrevious.text = txtCount.text
-                                            ivPhotoPrevious.setImageBitmap(uploadPhoto)
-                                            txtCount.setText("0")
-                                            ivPhoto.setImageResource(R.mipmap.n1)
-                                            uploadPhoto = null
-                                        }
+                                    uiThread {
+                                        alert("发送成功！").show()
+                                        txtDistinctPrevious.text = spDistinct.selectedItem.toString()
+                                        txtStreetPrevious.text = spStreet.selectedItem.toString()
+                                        txtShopSNPrevious.text = txtShopSN.text
+
+                                        spSpecial1Previous.text = spSpecial1.selectedItem.toString()
+                                        spSpecial2Previous.text = spSpecial2.selectedItem.toString()
+                                        spSpecial3Previous.text = spSpecial3.selectedItem.toString()
+                                        txtMemoPrevious.text = txtMemo.text
+                                        txtScorePrevious.text = txtScore.text
+                                        txtCountPrevious.text = txtCount.text
+                                        ivPhotoPrevious.setImageBitmap(uploadPhoto)
+                                        txtCount.setText("0")
+                                        ivPhoto.setImageResource(R.mipmap.n1)
+                                        uploadPhoto = null
                                     }
                                     response.close()
                                 } else {
@@ -153,7 +182,6 @@ class CollectionActivity : AppCompatActivity() {
         false
     }
 
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == 0) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -166,6 +194,7 @@ class CollectionActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun visitAlbum() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -267,70 +296,9 @@ class CollectionActivity : AppCompatActivity() {
         return path
     }
 
-    private lateinit var assignment: AssignmentTemplate
-    private lateinit var adSp1: ArrayAdapter<Special1Template>
-    private lateinit var adSp2: ArrayAdapter<Special2Template>
-    private lateinit var adSp3: ArrayAdapter<Special3Template>
-
-    private var uploadPhoto: Bitmap? = null
-
-    private lateinit var photoUri: Uri
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_collection)
-        navi_collection.selectedItemId = navi_collection.menu.getItem(2).itemId
-        navi_collection.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
-        tbCollection.inflateMenu(R.menu.toolbar_collection)
-        tbCollection.setOnMenuItemClickListener {
-            if (main_drawer_layout.isDrawerOpen(main_right_drawer_layout)) {
-                main_drawer_layout.closeDrawer(main_right_drawer_layout)
-            } else {
-                main_drawer_layout.openDrawer(main_right_drawer_layout)
-            }
-            return@setOnMenuItemClickListener true
-        }
-
-        tbCollection.setNavigationOnClickListener {
-            finish()
-        }
-
-        assignment = intent.getParcelableExtra("selectedItem") as AssignmentTemplate
-        tvTitle.text = when (assignment.AssignmentType) {
-            0 -> "地点位置(居住区)"
-            1 -> "地点位置(白天)"
-            2 -> "地点位置(早上)"
-            3 -> "地点位置(晚上)"
-            else -> "信息采集"
-        }
-        txtAddress.text = assignment.Address
-        txtDistinct.text = assignment.DistrictName
-        txtStreet.text = assignment.StreetName
-        txtName.text = assignment.Name
-
-        adSp1 = ArrayAdapter(this, android.R.layout.simple_list_item_1, Util.inst.special1.filter { it.mode == assignment.Mode.toByte() && it.sp0id == assignment.Sp0id })
-        spSpecial1.adapter = adSp1
-
-        spSpecial1.onItemSelectedListener = Sp1SelectedListener()
-        spSpecial2.onItemSelectedListener = Sp2SelectedListener()
-        spSpecial3.onItemSelectedListener = Sp3SelectedListener()
-    }
-
-
     internal inner class Sp1SelectedListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            if (assignment.Mode == 0) {
-                when (assignment.AssignmentType) {
-                    0 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template)
-                    1 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.day == true } })
-                    2 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.morning == true } })
-                    3 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.night == true } })
-                }
-            } else {
-                adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template)
-            }
+            adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template)
             spSpecial2.adapter = adSp2
         }
 
@@ -357,4 +325,15 @@ class CollectionActivity : AppCompatActivity() {
         override fun onNothingSelected(parent: AdapterView<*>?) {
         }
     }
+
+    private lateinit var adSp1: ArrayAdapter<Special1Template>
+    private lateinit var adSp2: ArrayAdapter<Special2Template>
+    private lateinit var adSp3: ArrayAdapter<Special3Template>
+
+    private lateinit var adDistinct: ArrayAdapter<DistinctTemplate>
+    private lateinit var adStreet: ArrayAdapter<StreetTemplate>
+
+    private var uploadPhoto: Bitmap? = null
+    private lateinit var photoUri: Uri
+
 }

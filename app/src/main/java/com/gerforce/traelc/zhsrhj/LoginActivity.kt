@@ -24,7 +24,15 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun getDistinct() {
+        doAsync {
+            distinct = URL(Util.inst.interfaceUrl + "Collection").readText()
+            Util.inst.distinct = Gson().fromJson<List<DistinctTemplate>>(distinct, object : TypeToken<List<DistinctTemplate>>() {}.type)
+        }
+    }
+
     private var special: String by Preference(this, "special", "")
+    private var distinct: String by Preference(this, "distinct", "")
     private var name: String by Preference(this, "userName", "")
     private var password: String by Preference(this, "password", "")
 
@@ -42,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
         }
         //if (special.isEmpty()) {
         getSpecial()
+        getDistinct()
         //} else {
         //    Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
         //}

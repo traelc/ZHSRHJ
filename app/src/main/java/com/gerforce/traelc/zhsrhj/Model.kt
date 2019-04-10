@@ -6,6 +6,18 @@ import android.os.Parcelable
 
 data class User(var UserID: Int, var LoginName: String, var UserName: String)
 
+data class DistinctTemplate(var DistrictID: Int, var DistrictName: String, var StreetTemplate: List<StreetTemplate>) {
+    override fun toString(): String {
+        return DistrictName
+    }
+}
+
+data class StreetTemplate(var StreetID: Int, var DistrictID: Int, var StreetName: String, var Sp0id: Int) {
+    override fun toString(): String {
+        return StreetName
+    }
+}
+
 data class Special0Template(var id: Int, var name: String, var Special1Template: List<Special1Template>) {
     override fun toString(): String {
         return name
@@ -31,6 +43,8 @@ data class Special3Template(var id: Int, var name: String, var sp2id: Int, var s
 }
 
 data class CollectionSubmit(var Problem: String?, var Count: Double, var PhotoSource: String?, var Special3ID: Int, var AssignmentID: Int, var IsFinished: Boolean)
+
+data class CollectionShopSubmit(var Memo: String?, var Count: Double, var PhotoSource: String?, var Special3ID: Int, var StreetID: Int, var ShopSN: String)
 
 data class AssignmentTemplate(var AssignmentID: Int, var UserID: Int, var Mode: Int, var QuarterID: Int?, var RoadID: Int?, var IsFinished: Boolean, var CreateDate: String,
                               var AssignmentDate: String, var StreetName: String, var DistrictName: String, var Longitude: Double, var Latitude: Double, var ModeName: String,

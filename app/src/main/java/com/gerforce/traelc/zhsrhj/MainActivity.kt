@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
             startActivity<CollectionListActivity>()
         }
 
-        btRectification.setOnClickListener {
-            alert("增改功能暂未启用！").show()
+        btShop.setOnClickListener {
+            startActivity<CollectionShopActivity>()
         }
     }
 

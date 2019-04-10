@@ -17,4 +17,5 @@ class Util : Application() {
     var interfaceUrl: String = "http://203.156.245.74:10003/api/"
     lateinit var user: User
     lateinit var special1: List<Special1Template>
+    lateinit var distinct: List<DistinctTemplate>
 }

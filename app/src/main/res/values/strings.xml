@@ -22,5 +22,6 @@
     <string name="collection_button_upload">拍照</string>
     <string name="collection_button_back">返回</string>
     <string name="collection_toolbar">上一次采集</string>
+    <string name="collection_shop_title">商铺</string>
 
 </resources>
