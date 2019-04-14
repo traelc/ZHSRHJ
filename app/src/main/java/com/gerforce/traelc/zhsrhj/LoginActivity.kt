@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun getDistinct() {
         doAsync {
-            distinct = URL(Util.inst.interfaceUrl + "Collection").readText()
+            distinct = URL(Util.inst.interfaceUrl + "Shop").readText()
             Util.inst.distinct = Gson().fromJson<List<DistinctTemplate>>(distinct, object : TypeToken<List<DistinctTemplate>>() {}.type)
         }
     }
@@ -42,10 +42,10 @@ class LoginActivity : AppCompatActivity() {
 
         tvVersion.text = this.packageManager.getPackageInfo(this.packageName, 0).versionName
 
-        if (!name.isEmpty()) {
+        if (name.isNotEmpty()) {
             txtName.setText(name)
         }
-        if (!password.isEmpty()) {
+        if (password.isNotEmpty()) {
             txtPassword.setText(password)
         }
         //if (special.isEmpty()) {
@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                             Util.inst.user = Gson().fromJson(body.string(), User::class.java)
                             name = txtName.text.toString()
                             password = txtPassword.text.toString()
-                            startActivity<CollectionListActivity>()
+                            startActivity<MainActivity>()
                         } else {
                             uiThread { alert("用户名或密码错误！") {}.show() }
                         }

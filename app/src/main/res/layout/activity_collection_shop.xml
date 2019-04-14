@@ -113,8 +113,8 @@
                     android:text="测评项目"
                     android:textSize="@dimen/text_size"
                     app:layout_constraintBottom_toBottomOf="@+id/spSpecial1"
-                    app:layout_constraintTop_toTopOf="@+id/spSpecial1"
-                    tools:layout_editor_absoluteX="32dp" />
+                    app:layout_constraintStart_toStartOf="@+id/tvStreet"
+                    app:layout_constraintTop_toTopOf="@+id/spSpecial1" />
 
                 <TextView
                     android:id="@+id/tvSpecial2"
@@ -146,10 +146,9 @@
                     android:layout_height="36dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
                     android:spinnerMode="dialog"
                     android:textSize="@dimen/text_size"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/spStreet"
                     app:layout_constraintStart_toEndOf="@+id/tvSpecial1"
                     app:layout_constraintTop_toBottomOf="@+id/txtShopSN" />
 
@@ -181,15 +180,13 @@
                     android:id="@+id/txtMemo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="27dp"
                     android:layout_marginTop="24dp"
-                    android:layout_marginEnd="27dp"
                     android:ems="10"
                     android:hint="备注"
                     android:inputType="text"
                     android:textSize="@dimen/text_size"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/txtShopSN"
+                    app:layout_constraintStart_toStartOf="@+id/txtShopSN"
                     app:layout_constraintTop_toBottomOf="@+id/tvSpecial3" />
 
                 <TextView

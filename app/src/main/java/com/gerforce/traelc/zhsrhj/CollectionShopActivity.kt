@@ -63,8 +63,7 @@ class CollectionShopActivity : AppCompatActivity() {
 
         adDistinct = ArrayAdapter(this, android.R.layout.simple_list_item_1, Util.inst.distinct)
         spDistinct.adapter = adDistinct
-
-
+        spDistinct.onItemSelectedListener = Sp4SelectedListener()
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -115,7 +114,8 @@ class CollectionShopActivity : AppCompatActivity() {
                                 Special3ID = (spSpecial3.selectedItem as Special3Template).id,
                                 Memo = txtMemo.text.toString(),
                                 ShopSN = txtShopSN.text.toString(),
-                                PhotoSource = null
+                                PhotoSource = null,
+                                UserID = Util.inst.user.UserID
                         )
 
                         if (uploadPhoto != null) {
@@ -320,6 +320,16 @@ class CollectionShopActivity : AppCompatActivity() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val item = adSp3.getItem(position)
             txtScore.text = item.score
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+        }
+    }
+
+    internal inner class Sp4SelectedListener : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            adStreet = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adDistinct.getItem(position).StreetTemplate)
+            spStreet.adapter = adStreet
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
