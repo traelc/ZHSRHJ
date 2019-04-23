@@ -150,7 +150,7 @@
                     android:textSize="@dimen/text_size"
                     app:layout_constraintEnd_toEndOf="@+id/spStreet"
                     app:layout_constraintStart_toEndOf="@+id/tvSpecial1"
-                    app:layout_constraintTop_toBottomOf="@+id/txtShopSN" />
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
                 <Spinner
                     android:id="@+id/spSpecial2"
@@ -248,6 +248,46 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtCount"
                     app:srcCompat="@mipmap/n1" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtShopSN">
+
+                    <RadioButton
+                        android:id="@+id/rbDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:padding="10dp"
+                        android:text="白天"
+                        android:textSize="@dimen/text_size" />
+
+                    <RadioButton
+                        android:id="@+id/rbMorning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="早上"
+                        android:textSize="@dimen/text_size" />
+
+                    <RadioButton
+                        android:id="@+id/rbNight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="晚上"
+                        android:textSize="@dimen/text_size" />
+                </RadioGroup>
+
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
 

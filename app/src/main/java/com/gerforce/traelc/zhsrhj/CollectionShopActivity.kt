@@ -115,9 +115,18 @@ class CollectionShopActivity : AppCompatActivity() {
                                 Memo = txtMemo.text.toString(),
                                 ShopSN = txtShopSN.text.toString(),
                                 PhotoSource = null,
-                                UserID = Util.inst.user.UserID
+                                UserID = Util.inst.user.UserID,
+                                CollectionType = 1
                         )
-
+                        if (rbDay.isChecked) {
+                            add.CollectionType = 1
+                        }
+                        if (rbMorning.isChecked) {
+                            add.CollectionType = 2
+                        }
+                        if (rbNight.isChecked) {
+                            add.CollectionType = 3
+                        }
                         if (uploadPhoto != null) {
                             val width = uploadPhoto!!.width
                             val height = uploadPhoto!!.height
