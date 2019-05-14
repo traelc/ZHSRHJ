@@ -93,35 +93,43 @@
 
                 <TextView
                     android:id="@+id/txtDistinct"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="48dp"
+                    android:layout_marginEnd="32dp"
                     android:textSize="@dimen/text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvDistinct"
                     app:layout_constraintTop_toTopOf="@+id/tvDistinct" />
 
                 <TextView
                     android:id="@+id/txtStreet"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
                     android:textSize="@dimen/text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/txtDistinct"
                     app:layout_constraintTop_toTopOf="@+id/tvStreet" />
 
                 <TextView
                     android:id="@+id/txtName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
                     android:textSize="@dimen/text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/txtStreet"
                     app:layout_constraintTop_toTopOf="@+id/tvName" />
 
                 <TextView
                     android:id="@+id/txtAddress"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:inputType=""
                     android:textSize="@dimen/text_size"
-                    android:inputType="textMultiLine"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/txtName"
                     app:layout_constraintTop_toTopOf="@+id/tvAddress" />
                 <TextView
@@ -164,8 +172,8 @@
                     android:id="@+id/spSpecial1"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
-                    android:layout_marginEnd="32dp"
                     android:layout_marginTop="21dp"
+                    android:layout_marginEnd="32dp"
                     android:spinnerMode="dialog"
                     android:textSize="@dimen/text_size"
                     app:layout_constraintEnd_toEndOf="parent"
