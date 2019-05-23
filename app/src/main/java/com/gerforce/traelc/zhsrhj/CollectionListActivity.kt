@@ -252,10 +252,10 @@ class CollectionListActivity : AppCompatActivity() {
     private fun refresh(srl: SwipeRefreshLayout? = null) {
         doAsync {
             data = Gson().fromJson<List<AssignmentTemplate>>(URL(Util.inst.interfaceUrl + "Android?UserID=" + Util.inst.user.UserID).readText(), object : TypeToken<List<AssignmentTemplate>>() {}.type)
-            adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 })
-            adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 })
-            adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 })
-            adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 })
+            adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 }.sortedBy { it.Name })
+            adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 }.sortedBy { it.Name })
+            adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 }.sortedBy { it.Name })
+            adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 }.sortedBy { it.Name })
 
             uiThread {
                 listView0.adapter = adapter0
