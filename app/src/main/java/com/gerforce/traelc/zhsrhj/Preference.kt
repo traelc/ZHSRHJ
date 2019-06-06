@@ -6,6 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 
+@Suppress("UNCHECKED_CAST")
 class Preference<T>(private val context: Context, val name: String, private val default: T) : ReadWriteProperty<Any?, T> {
 
     //通过属性代理初始化共享参数对象

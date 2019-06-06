@@ -18,11 +18,6 @@ data class StreetTemplate(var StreetID: Int, var DistrictID: Int, var StreetName
     }
 }
 
-data class Special0Template(var id: Int, var name: String, var Special1Template: List<Special1Template>) {
-    override fun toString(): String {
-        return name
-    }
-}
 
 data class Special1Template(var id: Int, var name: String, var mode: Byte, var sp0id: Int, var Special2Template: List<Special2Template>) {
     override fun toString(): String {
@@ -57,17 +52,17 @@ data class AssignmentTemplate(var AssignmentID: Int, var UserID: Int, var Mode: 
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readByte() != 0.toByte(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readDouble(),
             parcel.readDouble(),
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readValue(Double::class.java.classLoader) as? Double,
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),
             parcel.readByte() != 0.toByte(),

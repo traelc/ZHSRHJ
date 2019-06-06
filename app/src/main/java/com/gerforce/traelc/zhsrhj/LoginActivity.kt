@@ -1,10 +1,7 @@
 package com.gerforce.traelc.zhsrhj
 
 import android.os.Bundle
-import android.preference.Preference
-import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_login.*
@@ -12,7 +9,6 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jetbrains.anko.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
@@ -59,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
             if (txtName.text.isNullOrEmpty() || txtName.text.isNullOrEmpty()) {
                 alert("用户名或密码不能为空！") {}.show()
             }
-            var progress = indeterminateProgressDialog("登录中")
+            val progress = indeterminateProgressDialog("登录中")
             progress.show()
             doAsync {
                 try {
@@ -71,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                             .build()
                     val response = client.newCall(request).execute()
                     if (response.isSuccessful) {
-                        var body = response.body()
+                        val body = response.body()
                         if (body != null) {
                             Util.inst.user = Gson().fromJson(body.string(), User::class.java)
                             name = txtName.text.toString()

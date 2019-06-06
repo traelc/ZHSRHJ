@@ -59,7 +59,8 @@
         android:scaleType="fitXY"
         app:layout_constraintStart_toEndOf="@+id/btCollection"
         app:layout_constraintTop_toTopOf="@+id/btCollection"
-        app:srcCompat="@drawable/ic_file" />
+        app:srcCompat="@drawable/ic_file"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/tvCollection"

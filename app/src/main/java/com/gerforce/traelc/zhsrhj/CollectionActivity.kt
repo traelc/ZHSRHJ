@@ -25,7 +25,7 @@ import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import android.content.ContentUris
-import android.media.ExifInterface
+import android.support.media.ExifInterface
 import android.os.Build
 import android.provider.DocumentsContract
 
@@ -82,13 +82,12 @@ class CollectionActivity : AppCompatActivity() {
                                 IsFinished = swFinish.isChecked,
                                 PhotoSource = null
                         )
-
-                        if (uploadPhoto != null) {
+                        uploadPhoto?.let {
                             val width = uploadPhoto!!.width
                             val height = uploadPhoto!!.height
                             val matrix = Matrix()
                             matrix.preScale(0.125.toFloat(), 0.125.toFloat())
-                            val newBM = Bitmap.createBitmap(uploadPhoto, 0, 0, width, height, matrix, false)
+                            val newBM = Bitmap.createBitmap(uploadPhoto!!, 0, 0, width, height, matrix, false)
                             /*if (newBM != uploadPhoto) {
                                 uploadPhoto!!.recycle()
                             }*/
@@ -99,6 +98,7 @@ class CollectionActivity : AppCompatActivity() {
                             val b = stream.toByteArray()
                             add.PhotoSource = Base64Coder.encodeLines(b)
                         }
+
                         doAsync {
                             try {
                                 val client = OkHttpClient()
@@ -178,7 +178,7 @@ class CollectionActivity : AppCompatActivity() {
         val filename = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CHINA).format(Date())
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, filename)
-        photoUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        photoUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
         startActivityForResult(intent, 0)
     }
@@ -197,27 +197,29 @@ class CollectionActivity : AppCompatActivity() {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     var imagePath: String? = null
                     val uri = data.data
-                    if (DocumentsContract.isDocumentUri(this, uri)) {
-                        //如果是document类型的uri,则通过document id来处理
-                        val docId = DocumentsContract.getDocumentId(uri)
-                        if ("com.android.providers.media.documents" == uri.authority) {
-                            val id = docId.split(":")[1]
-                            val selection = MediaStore.Images.Media._ID + "=" + id
-                            imagePath = this.getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection)!!
-                        } else if ("com.android.providers.downloads.documents" == uri.authority) {
-                            val contentUri = ContentUris.withAppendedId(Uri.parse("content://download/public_downloads"), docId.toLong())
-                            imagePath = this.getImagePath(contentUri, null.toString())!!
+                    uri?.let {
+                        if (DocumentsContract.isDocumentUri(this, uri)) {
+                            //如果是document类型的uri,则通过document id来处理
+                            val docId = DocumentsContract.getDocumentId(uri)
+                            if ("com.android.providers.media.documents" == uri.authority) {
+                                val id = docId.split(":")[1]
+                                val selection = MediaStore.Images.Media._ID + "=" + id
+                                imagePath = this.getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection)!!
+                            } else if ("com.android.providers.downloads.documents" == uri.authority) {
+                                val contentUri = ContentUris.withAppendedId(Uri.parse("content://download/public_downloads"), docId.toLong())
+                                imagePath = this.getImagePath(contentUri, null.toString())!!
+                            }
+                        } else if ("content" == uri.scheme) {
+                            //如果是content类型的Uri,则使用普通的方式处理
+                            imagePath = this.getImagePath(uri, null.toString())!!
+                        } else if (uri.scheme == "file") {
+                            //如果是file类型的Uri，则直接获取图片路径即可
+                            imagePath = uri.path
                         }
-                    } else if ("content" == uri.scheme) {
-                        //如果是content类型的Uri,则使用普通的方式处理
-                        imagePath = this.getImagePath(uri, null.toString())!!
-                    } else if (uri.scheme == "file") {
-                        //如果是file类型的Uri，则直接获取图片路径即可
-                        imagePath = uri.path
-                    }
-                    if (imagePath != null) {
-                        uploadPhoto = BitmapFactory.decodeFile(imagePath)
-                        ivPhoto.setImageBitmap(uploadPhoto)
+                        if (imagePath != null) {
+                            uploadPhoto = BitmapFactory.decodeFile(imagePath)
+                            ivPhoto.setImageBitmap(uploadPhoto)
+                        }
                     }
                 }
             }
@@ -227,15 +229,17 @@ class CollectionActivity : AppCompatActivity() {
     private fun getPath(uri: Uri): String {
         val projection = arrayOf(MediaStore.Video.Media.DATA)
         val cursor = contentResolver.query(uri, projection, null, null, null)
-        val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+        val columnIndex = cursor!!.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
         cursor.moveToFirst()
-        return cursor.getString(columnIndex)
+        val path = cursor.getString(columnIndex)
+        cursor.close()
+        return path
     }
 
     private fun readPictureDegree(path: String): Int {
-        var degree: Int
-        var exifInterface = ExifInterface(path)
-        var orientation: Int = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        val degree: Int
+        val exifInterface = ExifInterface(path)
+        val orientation: Int = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
         degree = when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> 90
             ExifInterface.ORIENTATION_ROTATE_180 -> 180
@@ -245,8 +249,8 @@ class CollectionActivity : AppCompatActivity() {
         return degree
     }
 
-    private fun toTurn(img: Bitmap, path: String): Bitmap {
-        var img = img
+    private fun toTurn(pic: Bitmap, path: String): Bitmap {
+        var img = pic
         val matrix = Matrix()
         matrix.postRotate(readPictureDegree(path).toFloat())
         val width = img.width
@@ -323,13 +327,13 @@ class CollectionActivity : AppCompatActivity() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             if (assignment.Mode == 0) {
                 when (assignment.AssignmentType) {
-                    0 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template)
-                    1 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.day == true } })
-                    2 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.morning == true } })
-                    3 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template.filter { it.Special3Template.any { it.night == true } })
+                    0 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position)!!.Special2Template)
+                    1 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position)!!.Special2Template.filter { it -> it.Special3Template.any { it.day } })
+                    2 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position)!!.Special2Template.filter { it -> it.Special3Template.any { it.morning } })
+                    3 -> adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position)!!.Special2Template.filter { it -> it.Special3Template.any { it.night } })
                 }
             } else {
-                adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position).Special2Template)
+                adSp2 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp1.getItem(position)!!.Special2Template)
             }
             spSpecial2.adapter = adSp2
         }
@@ -340,7 +344,7 @@ class CollectionActivity : AppCompatActivity() {
 
     internal inner class Sp2SelectedListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            adSp3 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp2.getItem(position).Special3Template)
+            adSp3 = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, adSp2.getItem(position)!!.Special3Template)
             spSpecial3.adapter = adSp3
         }
 
@@ -351,7 +355,7 @@ class CollectionActivity : AppCompatActivity() {
     internal inner class Sp3SelectedListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             val item = adSp3.getItem(position)
-            txtScore.text = item.score
+            txtScore.text = item!!.score
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {

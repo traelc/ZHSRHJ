@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_collection.*
 import org.jetbrains.anko.*
 import java.net.URL
 
