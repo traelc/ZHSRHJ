@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_download -> {
                 getSpecial()
+                getDistinct()
                 alert("更新配置成功！") {}.show()
                 return@OnNavigationItemSelectedListener true
             }
@@ -40,11 +41,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var special: String by Preference(this, "special", "")
-
+    private var distinct: String by Preference(this, "distinct", "")
     private fun getSpecial() {
         doAsync {
             special = URL(Util.inst.interfaceUrl + "User").readText()
             Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+        }
+    }
+    private fun getDistinct() {
+        doAsync {
+            distinct = URL(Util.inst.interfaceUrl + "Shop").readText()
+            Util.inst.distinct = Gson().fromJson<List<DistinctTemplate>>(distinct, object : TypeToken<List<DistinctTemplate>>() {}.type)
         }
     }
 }

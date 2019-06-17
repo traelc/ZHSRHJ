@@ -44,12 +44,16 @@ class LoginActivity : AppCompatActivity() {
         if (password.isNotEmpty()) {
             txtPassword.setText(password)
         }
-        //if (special.isEmpty()) {
-        getSpecial()
-        getDistinct()
-        //} else {
-        //    Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
-        //}
+        if (special.isEmpty()) {
+            getSpecial()
+        } else {
+            Util.inst.special1 = Gson().fromJson<List<Special1Template>>(special, object : TypeToken<List<Special1Template>>() {}.type)
+        }
+        if (distinct.isEmpty()) {
+            getDistinct()
+        } else {
+            Util.inst.distinct = Gson().fromJson<List<DistinctTemplate>>(distinct, object : TypeToken<List<DistinctTemplate>>() {}.type)
+        }
 
         btLogin.setOnClickListener {
             if (txtName.text.isNullOrEmpty() || txtName.text.isNullOrEmpty()) {

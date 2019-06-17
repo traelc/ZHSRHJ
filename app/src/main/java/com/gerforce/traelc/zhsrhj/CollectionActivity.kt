@@ -86,7 +86,11 @@ class CollectionActivity : AppCompatActivity() {
                             val width = uploadPhoto!!.width
                             val height = uploadPhoto!!.height
                             val matrix = Matrix()
-                            matrix.preScale(0.125.toFloat(), 0.125.toFloat())
+                            if (width > 4000 || height > 4000) {
+                                matrix.preScale(0.0625.toFloat(), 0.0625.toFloat())
+                            } else {
+                                matrix.preScale(0.125.toFloat(), 0.125.toFloat())
+                            }
                             val newBM = Bitmap.createBitmap(uploadPhoto!!, 0, 0, width, height, matrix, false)
                             /*if (newBM != uploadPhoto) {
                                 uploadPhoto!!.recycle()
