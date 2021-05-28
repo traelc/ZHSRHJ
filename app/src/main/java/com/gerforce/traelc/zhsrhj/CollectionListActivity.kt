@@ -54,25 +54,25 @@ class CollectionListActivity : AppCompatActivity() {
                 when (tlMain.selectedTabPosition) {
                     0 -> {
                         if (adapter0.count > 0) {
-                            adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 }.sortedBy { it.AssignmentDate })
+                            adapter0 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 0 }.sortedBy { it.Name })
                             listView0.adapter = adapter0
                         }
                     }
                     1 -> {
                         if (adapter1.count > 0) {
-                            adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 }.sortedBy { it.AssignmentDate })
+                            adapter1 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 1 }.sortedBy { it.Name })
                             listView1.adapter = adapter1
                         }
                     }
                     2 -> {
                         if (adapter2.count > 0) {
-                            adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 }.sortedBy { it.AssignmentDate })
+                            adapter2 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 2 }.sortedBy { it.Name })
                             listView2.adapter = adapter2
                         }
                     }
                     3 -> {
                         if (adapter3.count > 0) {
-                            adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 }.sortedBy { it.AssignmentDate })
+                            adapter3 = CollectionListAdapter(baseContext, data.filter { it.AssignmentType == 3 }.sortedBy { it.Name })
                             listView3.adapter = adapter3
                         }
                     }
