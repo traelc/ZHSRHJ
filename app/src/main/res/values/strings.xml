@@ -14,7 +14,7 @@
     <string name="collection_list_button_detail">详细</string>
     <string name="collection_list_button_back">返回</string>
     <string name="collection_list_button_road">道路排序</string>
-    <string name="collection_list_button_time">时间排序</string>
+    <string name="collection_list_button_time">名称排序</string>
 
     <string name="collection_title">信息采集</string>
     <string name="collection_button_send">发送</string>
